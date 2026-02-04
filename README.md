@@ -1,2 +1,2 @@
-# clearwater
+# Clearwater
 A web-deployed pipeline to analyze Legionella pneumophila samples.
