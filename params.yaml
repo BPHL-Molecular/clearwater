@@ -1,0 +1,8 @@
+
+# Provide absolute path for both  "input" and "output"
+# input          : "/blue/bphl-florida/t.bazile1/yourworking_dir/yourdatadir"
+input: "/blue/bphl-florida/t.bazile1/legionella_pn/legion_pipeline/test_dir_fasta"
+#input: "/blue/bphl-florida/t.bazile1/legionella_pn/ksnp4_dir/pass_qc_sample_fasta"
+#input : "/blue/bphl-florida/t.bazile1/legionella_pn/legion_pipeline/fastas"
+output : "/blue/bphl-florida/t.bazile1/legionella_pn/legion_pipeline/output"
+#km_size: "17"
