@@ -20,7 +20,7 @@ gitGraph
        checkout phylogeny
        commit id: "MSA" tag:"ClustalW"
        commit id: "Phylogenetic tree" tag: "Iqtree"
-       checkout Clearwater _wf
+       checkout Clearwater_wf
        merge phylogeny        
 ```
 
