@@ -10,8 +10,7 @@ gitGraph
 
        branch MLST
        checkout MLST
-       commit id: "Multilocus sequentyping" tag:"elgato"
-       commit id: "Multilocus sequentyping" tag:"legsta"
+       commit id: "Multilocus sequentyping" tag:"elgato | legsta "
        checkout Clearwater_wf
        merge MLST
        commit id: "Taxonomic classification" tag:"Mash"
