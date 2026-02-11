@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #SBATCH --account=bphl-umbrella
 #SBATCH --qos=bphl-umbrella
-#SBATCH --mail-user=Tassy.Bazile@flhealth.gov
+#SBATCH --mail-user=YOUREMAIL@flhealth.gov
 #SBATCH --job-name=clearwater
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=16          #This parameter shoulbe be equal to the number of samples if you want fastest running speed. However, the setting number should be less than the max cpu limit(150). 
