@@ -1,4 +1,4 @@
-# [Clearwater]
+# Clearwater
 
 A scalable, automated **Nextflow DSL2 pipeline** for genomic characterization, quality control, phylogenetic mapping, and machine learning-driven subtyping of ***Legionella pneumophila*** assemblies.
 
@@ -146,10 +146,15 @@ Requirements scale dynamically depending on your cohort batch sizing. Minimum al
 
 ## 🚀 How to Run It (Usage)
 
-### 1. Configure Parameters
-Set up your file paths and parameters inside a local execution config or declare them inline during runtime execution.
+### 1. Clone the repository
+```
+git clone https://github.com/BPHL-Molecular/clearwater.git
+```
 
-### 2. Automatically create the pipeline conda environment to upload all conda packages
+### 2. Configure Parameters
+Set up your file paths and parameters inside a params.yaml file or declare them inline during runtime execution.
+
+### 3. Automatically create the pipeline conda environment to upload all conda packages
 #### a) Execute this command on your terminal
 ```bash
 conda env create -f CLEARWATERenvironment.yml
@@ -158,16 +163,16 @@ conda env create -f CLEARWATERenvironment.yml
 ```bash
 conda activate CLEARWATER
 ```
-### 3. Standard Execution Command
-Launch the master execution run by pointing to your local directory architecture or use the provided sbatch script(clearwater_run.sh):
+### 4. Standard Execution Command
+Launch the master execution run by pointing to your local directory architecture or use the provided sbatch script( sbatch clearwater_run.sh):
 
 ```bash
-nextflow run main.nf \
+nextflow run clearwater_wf.nf \
   --input "/path/to/your/fasta_folder" \
   --ref_genomes_dir "/path/to/reference_library" \
   --krakenSub_db "/path/to/kraken_database_file" \
   --output "results_output" \
-  -profile docker
+  -profile apptainer
 ```
 
 *To resume an interrupted or cached pipeline run without reprocessing completed steps, add the `-resume` flag.*

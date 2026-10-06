@@ -2,6 +2,5 @@
 
 input: "/Your-Path-To/samples_fasta"
 output : "./output"
-km_size: "17" # K-mer identification for Ksnp4 execution (core snp alignment and phylogenetic tree computation)
 krakenSub_db: "/Path-To/krakendb_subs/leg_subsp_customedDB" # Path to Kraken database of Legionella pneumophila subspecies
 ref_genomes_dir: "/PATH-To/reference_genomes" # optional or omit it to skip ANI entirely without crashing/ use it if you have reference genomes and need to calculate ANI
