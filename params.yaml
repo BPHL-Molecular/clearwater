@@ -1,8 +1,7 @@
-
 # Provide absolute path for both  "input" and "output"
-# input          : "/blue/bphl-florida/t.bazile1/yourworking_dir/yourdatadir"
-input: "/blue/bphl-florida/t.bazile1/legionella_pn/legion_pipeline/test_dir_fasta"
-#input: "/blue/bphl-florida/t.bazile1/legionella_pn/ksnp4_dir/pass_qc_sample_fasta"
-#input : "/blue/bphl-florida/t.bazile1/legionella_pn/legion_pipeline/fastas"
-output : "/blue/bphl-florida/t.bazile1/legionella_pn/legion_pipeline/output"
-#km_size: "17"
+
+input: "/Your-Path-To/samples_fasta"
+output : "./output"
+km_size: "17" # K-mer identification for Ksnp4 execution (core snp alignment and phylogenetic tree computation)
+krakenSub_db: "/Path-To/krakendb_subs/leg_subsp_customedDB" # Path to Kraken database of Legionella pneumophila subspecies
+ref_genomes_dir: "/PATH-To/reference_genomes" # optional or omit it to skip ANI entirely without crashing/ use it if you have reference genomes and need to calculate ANI

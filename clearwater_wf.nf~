@@ -1,30 +1,30 @@
 
 nextflow.enable.dsl=2
 
-include { elgato4mlst } from './clearwater_modules/elgato.nf'
-include { legsta } from './clearwater_modules/legsta.nf'
-include { kraken_subs } from './clearwater_modules/kraken_s.nf'
-include { proc_mash } from './clearwater_modules/leg_mash.nf'
-include { pyProc1 } from './clearwater_modules/pyproc1.nf'
-include { prokka } from './clearwater_modules/prokka.nf'
-include { pyProc4 } from './clearwater_modules/pyproc4.nf'
-include { pyProc5 } from './clearwater_modules/pyproc5.nf'
-include { pyProc7 } from './clearwater_modules/pyproc7.nf'
-include { ksnp4 } from './clearwater_modules/ksnp4.nf'
-include { checkm_qc } from './clearwater_modules/checkm.nf'
-include {pyProc3 } from './clearwater_modules/pyproc3.nf'
-include { runFastANI } from './clearwater_modules/fastani.nf'
-include { pyProc6 } from './clearwater_modules/parseANILog.nf'
-include {compile_report } from './clearwater_modules/cum_report.nf'
-include { data_preprop } from './clearwater_modules/data_preprop.nf'
-include { firth_regression } from './clearwater_modules/firth_regression.nf'
-include {iqtree_bootstrap } from './clearwater_modules/iqtree_bootstrap.nf'
-include {PANGENOME_ANALYSIS} from './clearwater_modules/roary_pangenome.nf'
-include {PLOT_PANGENOME } from './clearwater_modules/pangenome_plot.nf'
-include { EXTRACT_CLOUD_MAP } from './clearwater_modules/cloud_gene_map.nf'
-include { SKLEARN_LASSO } from './clearwater_modules/lassoPy.nf'
-include {KNN_CLASSIFICATION} from './clearwater_modules/knn_class.nf'
-include	{PCA_VISUALIZATION} from './clearwater_modules/pca_visual.nf'
+include { elgato4mlst } from './legCabbage_modules/elgato.nf'
+include { legsta } from './legCabbage_modules/legsta.nf'
+include { kraken_subs } from './legCabbage_modules/kraken_s.nf'
+include { proc_mash } from './legCabbage_modules/leg_mash.nf'
+include { pyProc1 } from './legCabbage_modules/pyproc1.nf'
+include { prokka } from './legCabbage_modules/prokka.nf'
+include { pyProc4 } from './legCabbage_modules/pyproc4.nf'
+include { pyProc5 } from './legCabbage_modules/pyproc5.nf'
+include { pyProc7 } from './legCabbage_modules/pyproc7.nf'
+include { ksnp4 } from './legCabbage_modules/ksnp4.nf'
+include { checkm_qc } from './legCabbage_modules/checkm.nf'
+include {pyProc3 } from './legCabbage_modules/pyproc3.nf'
+include { runFastANI } from './legCabbage_modules/fastani.nf'
+include { pyProc6 } from './legCabbage_modules/parseANILog.nf'
+include {compile_report } from './legCabbage_modules/cum_report.nf'
+include { data_preprop } from './legCabbage_modules/data_preprop.nf'
+include { firth_regression } from './legCabbage_modules/firth_regression.nf'
+include {iqtree_bootstrap } from './legCabbage_modules/iqtree_bootstrap.nf'
+include {PANGENOME_ANALYSIS} from './legCabbage_modules/roary_pangenome.nf'
+include {PLOT_PANGENOME } from './legCabbage_modules/pangenome_plot.nf'
+include { EXTRACT_CLOUD_MAP } from './legCabbage_modules/cloud_gene_map.nf'
+include { SKLEARN_LASSO } from './legCabbage_modules/lassoPy.nf'
+include {KNN_CLASSIFICATION} from './legCabbage_modules/knn_class.nf'
+include	{PCA_VISUALIZATION} from './legCabbage_modules/pca_visual.nf'
 
 workflow {
     // 1. Core sample channel
@@ -112,17 +112,12 @@ workflow {
     data_preprop(compile_report.out.global_report)
 
     // D. Feed dataprepop's emitted channel directly into the logistic regression analysis (emit: imputed_report by data_preprop)
+    firth_regression(data_preprop.out.imputed_report) // Treats genes'allele counts as continous numerical variables
 
-    // Firth biased-reduced multinomial logistic regression
-     firth_regression(data_preprop.out.imputed_report) // Treats genes'allele counts as continous numerical variables
-
-    // Lasso multinomial logistric regression  
     SKLEARN_LASSO(data_preprop.out.imputed_report) // Treats genes'alle numbers as nominal categories
 
-    // k-nearest neiggbors classification
     KNN_CLASSIFICATION(firth_regression.out.scaled_subspecies_data)
 
-    // Principal Component Analyis
     PCA_VISUALIZATION(
         firth_regression.out.scaled_subspecies_data,
         KNN_CLASSIFICATION.out.predictions

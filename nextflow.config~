@@ -17,7 +17,6 @@ apptainer {
     autoMounts = true
     cacheDir    = "${projectDir}/apptainer_cache"
     // Explicitly override engine discovery so it never has to look up 'apptainer' in the PATH
-    // prevent the container from mounting the cluster account's local home directory ($HOME)
     runOptions    = '--no-home'
 }
 
@@ -103,7 +102,19 @@ profiles {
                 time   = '30m'
             }
 
-                            
+            //withName: '*runFastANI*' {
+                // 1. Initial base configuration parameters
+                //cpus   = 4
+                //memory = { 16.GB * task.attempt } // Scales: 16GB -> 32 GB -> 48 GB on retries
+                //time   = '2h'
+
+                // 2. ERROR RESCUEsafety-net: If exit status is 137, 139, or 143 (OOM errors), 
+                // retry the job automatically with the scaled memory resource allocations!
+               // errorStrategy = { task.exitStatus == 137 ? 'retry' : 'finish' }
+               // maxRetries    = 3
+            //}
+
+                   
         }
     }
 
