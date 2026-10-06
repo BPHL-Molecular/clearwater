@@ -1,6 +1,6 @@
 # Clearwater
-![Clear Water](https://unsplash.com)
-A scalable, automated **Nextflow DSL2 pipeline** for genomic characterization, quality control, phylogenetic mapping, and machine learning-driven subtyping of ***Legionella pneumophila*** assemblies.
+![Clear Water](assets/clear-water.png)
+## A scalable, automated **Nextflow DSL2 pipeline** for genomic characterization, quality control, phylogenetic mapping, and machine learning-driven subtyping of ***Legionella pneumophila*** assemblies.
 
 ## 📖 What Clearwater Does
 
