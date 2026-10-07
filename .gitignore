@@ -1,1 +1,8 @@
+# Ignore local nextflow execution files
+.nextflow/
+.nextflow.log*
+work/
 
+# Ignore specific result formats you don't want tracked
+*.log
+*.tmp
