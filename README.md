@@ -256,6 +256,8 @@ subsp. fraseri     | 0                  | 1
 subsp. pneumophila | 0                  | 2                 
 ======================================================================
 ```
+</details>
+
 <details>
 <summary><b>🧬 Click to view Pangenome Analysis Panel (pangenome_plots/)</b></summary>
 <br>
@@ -283,4 +285,4 @@ This structured multi-panel visualization provides an overview of the global gen
   <p><i>Figure: Integrated pangenome analysis panel capturing core genome conservation metrics (1,280 core gene clusters), accessory shell trends (3,640 genes), and strain-specific cloud components (2,547 unique isolates) evaluated across the 10-strain cohort.</i></p>
 </div>
 </details>
-</details>
+
