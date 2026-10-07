@@ -286,3 +286,15 @@ This structured multi-panel visualization provides an overview of the global gen
 </div>
 </details>
 
+<details>
+<summary><b>🎯 Click to view LASSO Multinomial Regression Heatmap (lassoMregression_results/)</b></summary>
+<br>
+
+This heatmap maps the predictive weights (Log-Odds Coefficients) calculated by the machine learning module to identify significant diagnostic allele predictors for each target subspecies class:
+
+<div align="center">
+  <!-- Paste your exact unique asset link inside the src quotes below -->
+  <img src="https://github.com/user-attachments/assets/e505bb46-ca2f-44f0-9828-3245027fe0c7" alt="LASSO Multinomial Regression Diagnostic Allele Predictors" width="75%" />
+  <p><i>Figure: LASSO multiclass predictive heatmap tracking diagnostic genetic variants (e.g., Gene_neuA_neuAh: 2.0 strongly predicting subsp. pneumophila with a -2.8307 log-odds coefficient shift).</i></p>
+</div>
+</details>
