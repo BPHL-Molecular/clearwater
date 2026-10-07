@@ -1,5 +1,5 @@
 # Clearwater
-![Clear Forest River](https://travel.usnews.com/dims4/USNEWS/c9d437b/2147483647/resize/976x652%5E%3E/crop/976x652/quality/85/format/webp/?url=https%3A%2F%2Ftravel.usnews.com%2Fimages%2FGettyImages-120265222_1.jpg)
+![Clear Water](https://wikimedia.org)
 ## Clearwater is a scalable, automated **Nextflow DSL2 pipeline** for genomic characterization, quality control, phylogenetic mapping, and machine learning-driven subtyping of ***Legionella pneumophila*** assemblies.
 
 ## 📖 What Clearwater Does
