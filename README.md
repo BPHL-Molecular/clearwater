@@ -301,3 +301,26 @@ This heatmap maps the predictive weights (Log-Odds Coefficients) calculated by t
   <p><i>Figure: LASSO multiclass predictive heatmap tracking diagnostic genetic variants (e.g., Gene_neuA_neuAh: 2.0 strongly predicting subsp. pneumophila with a -2.8307 log-odds coefficient shift).</i></p>
 </div>
 </details>
+
+<details>
+<summary><b>🌳 Click to view Core Genome Phylogeny (bootstrap_tree/)</b></summary>
+<br>
+
+This Maximum-Likelihood consensus tree resolves the phylogenetic relationships across the target cohort based on core genome SNP alignments. High-confidence bootstrap support configurations (value of 100) are mapped onto the nodes:
+
+<div align="center">
+  <!-- Paste your new iTOL exported image URL inside the src quotes below -->
+  <img src="https://github.com/user-attachments/assets/c6fa5f70-ed8c-451e-9b54-9efb16aea980" alt="Core Genome Phylogeny Tree with Bootstraps" width="80%" />
+  <br><br>
+  
+  <p>
+    🔗 <b>Interactive Exploration:</b> 
+    <a href="https://itol.embl.de/tree/16778427336471791404714" target="_blank">👉 Click here to explore this tree interactively on iTOL</a>
+  </p>
+  
+  <p><i>Figure: Midpoint-rooted phylogenetic tree computed via IQ-TREE. Branch numbers indicate standard bootstrap support metrics calculated across 1,000 replicate pairings.</i></p>
+</div>
+</details>
+
+
+
