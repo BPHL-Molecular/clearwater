@@ -258,12 +258,3 @@ subsp. pneumophila | 0                  | 2
 ```
 
 </details>
-
-<img width="4800" height="2100" alt="subspecies_pca_comparison_panel" src="https://github.com/user-attachments/assets/30067913-9d18-419b-80ed-a9cdc7a0240a" />
-
-
-
-
-
-
-
