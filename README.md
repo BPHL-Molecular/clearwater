@@ -208,7 +208,10 @@ results_output/
 │   └── lasso_coefficients_heatmap.png   # Multiclass predictive heatmap
 ├── firth_multinomial_formatted.txt      # Pre-formatted regression input data array
 ├── firth_multinomial_results.txt        # Firth-corrected logistic regression p-values and log-odds
-└── ksnp_out/                            # Core k-mer SNP phylogenetics and validation files
+├── ksnp_out/                            # Core k-mer SNP phylogenetics and validation files
+└── bootstrap_tree/                      # IQ-TREE consensus tree and support value mappings
+    ├── core_bootstrap.iqtree            # Detailed IQ-TREE execution log, models, and text-based tree
+    └── core_bootstrap.treefile          # Maximum-likelihood consensus tree file (Newick format)
 ```
 ### 📈 Generated Visualizations & Performance
 
