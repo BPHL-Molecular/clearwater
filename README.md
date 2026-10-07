@@ -186,15 +186,27 @@ When execution finishes, the designated output directory (`params.output/`) will
 
 ```text
 results_output/
-├── [SampleID]/                     # Individual sample analytics folders
-│   └── prokka_out/                 # GFF, FAA, FNA, and GBK file maps
+├── [SampleID]/                          # Individual sample analytics folders
+│   └── prokka_out/                      # GFF, FAA, FNA, and GBK file maps
 ├── pangenome_analysis/
 │   └── roary_out/
-│       ├── gene_presence_absence.csv  # Global pangenome matrix spreadsheet
-│       ├── summary_statistics.txt     # Breakdown of Core, Shell, and Cloud distributions
-│       └── core_gene_alignment.aln    # MAFFT core gene sequence alignment file
+│       ├── gene_presence_absence.csv    # Global pangenome matrix spreadsheet
+│       ├── summary_statistics.txt       # Breakdown of Core, Shell, and Cloud distributions
+│       └── core_gene_alignment.aln      # MAFFT core gene sequence alignment file
+├── pangenome_plots/                     # Visualizations of the pangenome structure
+│   ├── pangenome_frequency.png          # Gene frequency distribution plot
+│   ├── pangenome_matrix.png             # Presence/absence matrix heatmap
+│   └── pangenome_pie.png                # Core vs. Cloud distribution pie chart
+├── pca_plots/                           # Dimensionality reduction outputs
+│   └── subspecies_pca_comparison_panel  # Comparative PCA scatter layout across cohorts
+├── knn_classification_results/          # Supervised machine learning performance data
+│   ├── knn_performance_metrics.txt      # Model precision, recall, and accuracy scores
+│   └── knn_predicted_subspecies         # Assigned taxonomic classifications per sample
 ├── lassoMregression_results/
-│   ├── lasso_model_summary.txt              # Model feature selection stats
+│   ├── lasso_model_summary.txt          # Model feature selection stats
 │   ├── lasso_coefficients_reportingTable.csv # Feature performance scores
-│   └── lasso_coefficients_heatmap.png       # Multiclass predictive heatmap
+│   └── lasso_coefficients_heatmap.png   # Multiclass predictive heatmap
+├── firth_multinomial_formatted.txt      # Pre-formatted regression input data array
+├── firth_multinomial_results.txt        # Firth-corrected logistic regression p-values and log-odds
+└── ksnp_out/                            # Core k-mer SNP phylogenetics and validation files
 ```
