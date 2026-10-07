@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # (Add cluster directives here like nodes, time, qos, etc.)
-#SBATCH --account=bphl-umbrella
-#SBATCH --qos=bphl-umbrella
-#SBATCH --mail-user=Tassy.Bazile@flhealth.gov
-#SBATCH --job-name=legcabb
+#SBATCH --account=bphl-umbrella   # user's group account on cluster otherwise remove it
+#SBATCH --qos=bphl-umbrella       # user's group account on cluster otherwise remove it
+#SBATCH --mail-user=USER@flhealth.gov  # User's email address
+#SBATCH --job-name=clearwater
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=16          #This parameter shoulbe be equal to the number of samples if you want fastest running speed. However, the setting number should be less than the max cpu limit(150).
 #SBATCH --mem=128gb
 #SBATCH --time=24:00:00
-#SBATCH --output=legcabb.%j.out
-#SBATCH --error=legcabb.%j.err
+#SBATCH --output=clearwater.%j.out
+#SBATCH --error=clearwater.%j.err
 
 
 
