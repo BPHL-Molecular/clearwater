@@ -22,9 +22,10 @@ echo "Starting Nextflow pipeline inside a single allocation sandbox..."
 
 # 1. Dynamically find the absolute path to your environment
 
-CONDA_PATH="/blue/bphl-florida/t.bazile1/conda/envs/LEGCABBAGE"
+CONDA_PATH="/PATH-TO/USERNAME/conda/envs/CLEARWATER"
+
 # 2. Execute the workflow using local tracking limits to stay under the QOS submission radar
-nextflow run legCabbage_wf_0914.nf \
+nextflow run clearwater_wf.nf \
     -params-file params.yaml \
     -profile apptainer \
     --process.withName:'datapreprop|firth_regression|pyProc.*'.container=null \
