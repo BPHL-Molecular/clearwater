@@ -310,7 +310,7 @@ This Maximum-Likelihood consensus tree resolves the phylogenetic relationships a
 
 <div align="center">
   <!-- Paste your new tree asset link inside the src quotes below -->
-  <img src="https://github.com/user-attachments/assets/b16e2752-560f-49be-9eb2-3b5cef163b74" alt="Core Genome Phylogeny Tree" width="100%" style="background-color: white !important; padding: 15px; border-radius: 6px; border: 1px solid #e1e4e8;" alt="Core Genome Phylogeny Tree with Bootstraps" width="100%" style="background-color: white !important; padding: 15px; border-radius: 6px; border: 1px solid #e1e4e8;" />
+  <img src="https://github.com/user-attachments/assets/6edec3e2-150d-4bd6-b41e-9f810655e1fa" alt="Core Genome Phylogeny Tree" width="100%" style="background-color: white !important; padding: 15px; border-radius: 6px; border: 1px solid #e1e4e8;" alt="Core Genome Phylogeny Tree with Bootstraps" width="100%" style="background-color: white !important; padding: 15px; border-radius: 6px; border: 1px solid #e1e4e8;" />
   <br><br>
   
   <p><i>Figure: Midpoint-rooted phylogenetic tree computed via IQ-TREE. Branch text numbers indicate standard bootstrap support metrics calculated across 1,000 replicate pairings, demonstrating maximum confidence values across all major nodes.</i></p>
