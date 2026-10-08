@@ -3,7 +3,7 @@ nextflow.enable.dsl=2
 process proc_mash {
     // Automatically copies your final mash results into the sample folder
     publishDir { "${params.output}/${fasta_file.baseName}/mash_out" }, mode: 'copy'
-    container 'docker://staphb/mash:latest'
+    container 'docker://staphb/mash:2.3'
     input:
     // Unpack everything sent down from the kraken_subs process
     tuple path(kraken_report), path(kraken_out),path(elgato_folder), path(fasta_file)

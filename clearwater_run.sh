@@ -28,14 +28,14 @@ CONDA_PATH="/PATH-TO/USERNAME/conda/envs/CLEARWATER"
 nextflow run clearwater_wf.nf \
     -params-file params.yaml \
     -profile apptainer \
-    --process.withName:'datapreprop|firth_regression|pyProc.*'.container=null \
-    --process.withName:'datapreprop|firth_regression|pyProc.*'.conda="$CONDA_PATH" \
+    --process.withName:'data_preprop|firth_regression|pyProc.*'.container=null \
+    --process.withName:'firth_regression|pyProc.*'.conda="$CONDA_PATH" \
     -resume 
 
-
+# 3. Capture the status ("Grab the success/failure code") immediately before any other command runs
 NEXTFLOW_EXIT_CODE=$?
 
-# 3. Crash early evaluation check
+# 4. Crash early evaluation check ( use the above variable alert users)
 if [ $NEXTFLOW_EXIT_CODE -ne 0 ]; then
     echo "ERROR: Nextflow pipeline failed with exit code $NEXTFLOW_EXIT_CODE."
     echo "Check .nextflow.log for details."
@@ -44,7 +44,7 @@ fi
 
 echo "Pipeline finished successfully. Checking for report files..."
 
-# 4. Storage sync safety cushion check (Up to 1 minute max polling fallback)
+# 5. Storage sync safety cushion check (Up to 1 minute max polling fallback)
 MAX_TRIES=12
 TRY_COUNT=0
 
@@ -62,18 +62,18 @@ sleep 5
 
 echo "Compiling final summary report..."
 
-# 5. Seed a fresh cumulative file with proper tab-delimited structural headers
+# 6. Seed a fresh cumulative file with proper tab-delimited structural headers
 
 echo -e "sampleID\tspeciesID_mash\tnearest_neighbor_mash\tmash_distance\tAssembly_Completeness\tContamination_level\tGenome_size\tNcontig\tsubspeciesID_kraken\tkrakenSubsp_percent\tBest_Ref_Genome\tHighest_ANI_Percent\tSeqType\tGene_flaA\tGene_pilE\tGene_asd\tGene_mip\tGene_mompS\tGene_proA\tGene_neuA_neuAh" > ./output/leg_sum_report.txt
 
-# 6. Stream file text directly while filtering out duplicate header strings natively
+# 7. Stream file text directly while filtering out duplicate header strings natively
 find ./output/ -type f -name "report.txt" -exec grep -h -v "^sampleID" {} + >> ./output/leg_sum_report.txt
 
 echo "Summary report leg_sum_report.txt generated successfully!"
 
 
 # =================================================================
-# 6b. NEW: MASTER REPORT AUDIT & VALIDATION CHECK
+# 8. NEW: MASTER REPORT AUDIT & VALIDATION CHECK
 # =================================================================
 echo "=== Running Master Report Validation ==="
 
@@ -111,7 +111,7 @@ fi
 
 
 # =================================================================
-# 7. INTERMEDIATE WORKSPACE PURGE & STORAGE EVACUATION
+# 9. INTERMEDIATE WORKSPACE PURGE & STORAGE EVACUATION
 # =================================================================
 echo "=== Validation passed. Cleaning up heavy scratch files ==="
 
