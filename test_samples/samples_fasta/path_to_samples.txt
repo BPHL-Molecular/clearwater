@@ -1,0 +1,3 @@
+# Copy sample from the path
+/orange/bphl-*/legionella_samples/test_samples/samples_fasta
+

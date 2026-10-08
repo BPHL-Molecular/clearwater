@@ -1,6 +1,9 @@
 # Provide absolute path for both  "input" and "output"
+# If you are on HPG, datasebases are in the orange drive under the absolute path: /../legionelle_subspecies/krakendb_lpsubs/leg_subsp_customedDB"
+# Similarly our Lp reference genomes (or you may download your own ones) are under the absolute path : /../legionelle_subspecies/reference_genomes
 
 input: "/Your-Path-To/samples_fasta"
 output : "./output"
-krakenSub_db: "/PATH-To/krakendb_subs/leg_subsp_customedDB" # Path to customed Kraken database of Legionella pneumophila subspecies
+krakenSub_db: "/PATH-To/krakendb_lpsubs/leg_subsp_customedDB" # Path to customed Kraken database of Legionella pneumophila subspecies
 ref_genomes_dir: "/PATH-To/reference_genomes" # optional or omit it to skip ANI entirely without crashing/ use it if you have reference genomes and need to calculate ANI
+
