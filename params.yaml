@@ -1,6 +1,6 @@
 # Provide absolute path for both  "input" and "output"
-# If you are on HPG, datasebases are in the orange drive under the absolute path: /../legionelle_subspecies/krakendb_lpsubs/leg_subsp_customedDB"
-# Similarly our Lp reference genomes (or you may download your own ones) are under the absolute path : /../legionelle_subspecies/reference_genomes
+# If you are on HPG, datasebases are in the orange drive under the absolute path: "/orange/../legionelle_subspecies/krakendb_lpsubs/leg_subsp_customedDB"
+# Similarly our Lp reference genomes (or you may download your own ones) are under the absolute path : "/orange/../legionelle_subspecies/reference_genomes"
 
 input: "/Your-Path-To/samples_fasta"
 output : "./output"
