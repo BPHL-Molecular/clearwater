@@ -1,7 +1,15 @@
 # Clearwater
-<img src="https://github.com/user-attachments/assets/6eecc007-cd6b-4ef3-ba2c-9bde5eef66ab" alt="Clear Water" width="15%" />
+<table>
+  <tr>
+    <td valign="top" width="15%">
+      <img src="https://github.com/user-attachments/assets/6eecc007-cd6b-4ef3-ba2c-9bde5eef66ab" alt="Clear Water" width="100%" />
+    </td>
+    <td valign="top">
+      <h2>Clearwater is a scalable, automated <strong>Nextflow DSL2 pipeline</strong> for genomic characterization, quality control, phylogenetic mapping, and machine learning-driven subtyping of <em>Legionella pneumophila</em> assemblies.</h2>
+    </td>
+  </tr>
+</table>
 
-## Clearwater is a scalable, automated **Nextflow DSL2 pipeline** for genomic characterization, quality control, phylogenetic mapping, and machine learning-driven subtyping of ***Legionella pneumophila*** assemblies.
 
 ## 📖 What Clearwater Does
 
@@ -187,7 +195,11 @@ When execution finishes, the designated output directory (`params.output/`) will
 ```text
 results_output/
 ├── [SampleID]/                          # Individual sample analytics folders
-│   └── prokka_out/                      # GFF, FAA, FNA, and GBK file maps
+│   ├── prokka_out/                      # GFF, FAA, FNA, and GBK file maps
+│   ├── kraken_out/                      # Taxonomic classification and metagenomic profiling
+│   ├── mash_out/                        # Genomic distance estimations and MinHash sketches
+│   └── elgato_out/                      # Targeted MLST or specific genotyping outputs
+├── checkm_qc/                           # Quality control and genome completeness assessments
 ├── pangenome_analysis/
 │   └── roary_out/
 │       ├── gene_presence_absence.csv    # Global pangenome matrix spreadsheet
@@ -206,6 +218,7 @@ results_output/
 │   ├── lasso_model_summary.txt          # Model feature selection stats
 │   ├── lasso_coefficients_reportingTable.csv # Feature performance scores
 │   └── lasso_coefficients_heatmap.png   # Multiclass predictive heatmap
+├── leg_sum_report.txt                   # Summary report file for the pipeline execution
 ├── firth_multinomial_formatted.txt      # Pre-formatted regression input data array
 ├── firth_multinomial_results.txt        # Firth-corrected logistic regression p-values and log-odds
 ├── ksnp_out/                            # Core k-mer SNP phylogenetics and validation files
