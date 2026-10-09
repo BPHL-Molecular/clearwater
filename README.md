@@ -172,19 +172,25 @@ conda env create -f CLEARWATERenvironment.yml
 ```bash
 conda activate CLEARWATER
 ```
-### 4. Standard Execution Command
-Launch the master execution run by pointing to your local directory architecture or use the provided sbatch script( sbatch clearwater_run.sh):
+### 4. Execute Clearwater (2 options)
+
+#### 4.1. Standard Execution Command
+Launch the master execution run by pointing to your local directory architecture:
 
 ```bash
 nextflow run clearwater_wf.nf \
-  --input "/path/to/your/fasta_folder" \
+  --input "/path/to/your/samples_fasta_dir" \
   --ref_genomes_dir "/path/to/reference_library" \
-  --krakenSub_db "/path/to/kraken_database_file" \
+  --krakenSub_db "/path/to/kraken_database_files" \
   --output "results_output" \
   -profile apptainer
 ```
-
 *To resume an interrupted or cached pipeline run without reprocessing completed steps, add the `-resume` flag.*
+
+#### 4.2. Run the provided sbatch script (check it and adjust path)
+```bash
+sbatch clearwater_run.sh
+```
 
 ---
 
