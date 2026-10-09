@@ -285,15 +285,15 @@ This structured multi-panel visualization provides an overview of the global gen
     <tr style="border: none;">
       <td align="center" valign="top" style="border: none; width: 33.33%;">
         <b>Gene Frequency Distribution</b><br><br>
-        <img src="https://github.com/user-attachments/assets/4d5076b2-53fe-4721-bb24-75290f9284b3" alt="pangenome_frequency" style="width: 100%; max-width: 350px; border-radius: 4px;" />
+        <img src="assets/pangenome_frequency.png" alt="pangenome_frequency" style="width: 100%; max-width: 350px; border-radius: 4px;" />
       </td>
       <td align="center" valign="top" style="border: none; width: 33.33%;">
         <b>Roary Alignment Matrix Map</b><br><br>
-        <img src="https://github.com/user-attachments/assets/56554bd8-663f-414e-bab1-2daef4aef1d7" alt="pangenome_matrix" style="width: 100%; max-width: 350px; border-radius: 4px;" />
+        <img src="assets/pangenome_matrix.png" alt="pangenome_matrix" style="width: 100%; max-width: 350px; border-radius: 4px;" />
       </td>
       <td align="center" valign="top" style="border: none; width: 33.33%;">
         <b>Core vs. Cloud Distribution Pie</b><br><br>
-        <img src="https://github.com/user-attachments/assets/341c1120-edb0-4445-a985-9398d3aa0ffa" alt="pangenome_pie" style="width: 100%; max-width: 350px; border-radius: 4px;" />
+        <img src="assets/pangenome_pie.png" alt="pangenome_pie" style="width: 100%; max-width: 350px; border-radius: 4px;" />
       </td>
     </tr>
   </table>
@@ -301,6 +301,7 @@ This structured multi-panel visualization provides an overview of the global gen
   <p><i>Figure: Integrated pangenome analysis panel capturing core genome conservation metrics (1,280 core gene clusters), accessory shell trends (3,640 genes), and strain-specific cloud components (2,547 unique isolates) evaluated across the 10-strain cohort.</i></p>
 </div>
 </details>
+
 
 <details>
 <summary><b>🎯 Click to view LASSO Multinomial Regression Heatmap (lassoMregression_results/)</b></summary>
