@@ -160,7 +160,7 @@ Set up your file paths and parameters inside a params.yaml file or declare them 
 ```bash
 conda env create -f CLEARWATERenvironment.yml
 ```
-#### b) Activate de created environment
+#### b) Activate the created environment
 ```bash
 conda activate CLEARWATER
 ```
