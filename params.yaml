@@ -5,5 +5,5 @@
 input: "/Your-Path-To/samples_fasta"
 output : "./output"
 krakenSub_db: "/PATH-To/krakendb_lpsubs/leg_subsp_customedDB" # Path to customed Kraken database of Legionella pneumophila subspecies
-ref_genomes_dir: "/PATH-To/reference_genomes" # optional or omit it to skip ANI entirely without crashing/ use it if you have reference genomes and need to calculate ANI
+ref_genomes_dir: "/PATH-To/reference_genomes" # optional flag (or omit it to skip ANI entirely without crashing) to use if you have reference genomes and need to calculate ANI
 
