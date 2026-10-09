@@ -328,3 +328,5 @@ This Maximum-Likelihood consensus tree resolves the phylogenetic relationships a
   <p><i>Figure: Midpoint-rooted phylogenetic tree computed via IQ-TREE. Branch text numbers indicate standard bootstrap support metrics calculated across 1,000 replicate pairings, demonstrating maximum confidence values across all major nodes.</i></p>
 </div>
 </details>
+
+### Test Clearwater out on more (>140) sample assemblies to evaluate its full performance.
