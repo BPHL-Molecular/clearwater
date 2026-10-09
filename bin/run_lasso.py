@@ -48,9 +48,21 @@ def main():
     feature_names = X.columns.tolist()
     subspecies_classes = sorted(y.unique().tolist())
 
-    # 3. Setup and Fit LogisticRegressionCV (Lasso L1 Multinomial)
+    # =========================================================================================
+    # 3. Setup and Fit LogisticRegressionCV (Lasso L1 Multinomial) with Dynamic Folds
+    # =========================================================================================
+    # Calculate the size of the smallest sample group to prevent split value crashes
+    min_class_size = y.value_counts().min()
+    
+    # Stratified cross-validation splits cannot be larger than the total members of your rarest class
+    if min_class_size > 1:
+        safe_cv_folds = min(5, min_class_size)
+    else:
+        print("Warning: One of your target groups has only 1 sample. Falling back to a 2-fold cross-validation setup.")
+        safe_cv_folds = 2
+
     lasso_model = LogisticRegressionCV(
-        cv=5,
+        cv=safe_cv_folds,
         penalty='l1',
         solver='saga',
         scoring='accuracy',
@@ -60,9 +72,18 @@ def main():
     )
     lasso_model.fit(X, y)
 
+    # =========================================================================================
     # 4. Compute Metrics for the Model Performance Metrics Report
-    best_C = lasso_model.C_[0]
+    # =========================================================================================
+    # Handle multi-class arrays securely by taking the mean across target categories
+    raw_C = lasso_model.C_
+    if isinstance(raw_C, (np.ndarray, list)):
+        best_C = float(np.mean(raw_C))
+    else:
+        best_C = float(raw_C)
+        
     equivalent_lambda = 1.0 / best_C
+    alpha = 1.0 / best_C
     
     # Compute accuracy on the full training set
     y_pred = lasso_model.predict(X)
@@ -70,15 +91,13 @@ def main():
     
     # Compute Cohen's Kappa score
     kappa = cohen_kappa_score(y, y_pred)
-    
-    # Lasso alpha = 1 / C
-    alpha = 1.0 / best_C
 
     with open(args.model_output, 'w', encoding='utf-8') as f:
         f.write("=== PYTHON SCIKIT-LEARN LASSO MULTINOMIAL MODEL TUNING OVERVIEW ===\n\n")
         f.write(f"Total Samples Analyzed : {len(df)}\n")
         f.write(f"Total Predictive Feats: {len(feature_names)}\n")
         f.write(f"Target Subspecies      : {', '.join(subspecies_classes)}\n\n")
+        
         f.write("=== OPTIMIZED HYPERPARAMETERS & PERFORMANCE METRICS ===\n")
         f.write(f"Alpha                  : {alpha:.6f}\n")
         f.write(f"Lambda (R equivalent)  : {equivalent_lambda:.6f}\n")
@@ -167,7 +186,9 @@ def main():
     # Export to file
     short_table.to_csv(args.table_output, index=False)
 
-    # 10. Generate and Save Reporting Visualizations
+    # =========================================================================================
+    # 10. Generate and Save Reporting Visualizations (With Safe Fallback Empty Plot)
+    # =========================================================================================
     plot_df = short_table[short_table["Genetic Predictor"] != "(Intercept)"].copy()
     
     if not plot_df.empty:
@@ -192,12 +213,20 @@ def main():
         plt.xticks(rotation=15)
         plt.tight_layout()
         
-        # FIXED AND COMPLETED PLOT TERMINATION
         plt.savefig(args.plot_output, dpi=300)
         plt.close()
         print(f"Successfully generated outputs: {args.model_output}, {args.table_output}, {args.plot_output}")
     else:
-        print("Successfully generated text/table. No non-zero variants found to plot.")
+        # Fallback empty image generation block to satisfy Nextflow output requirements
+        plt.figure(figsize=(6, 2))
+        plt.text(0.5, 0.5, "No non-zero variants\nfound to plot.", 
+                 ha='center', va='center', fontsize=12, color='darkred', weight='bold')
+        plt.axis('off')
+        plt.tight_layout()
+        
+        plt.savefig(args.plot_output, dpi=150)
+        plt.close()
+        print(f"Successfully generated text/table. Saved fallback empty plot layout to {args.plot_output}")
 
 if __name__ == '__main__':
     main()
