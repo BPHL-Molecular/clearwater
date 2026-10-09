@@ -235,11 +235,10 @@ results_output/
 To view the separation performance across *Legionella pneumophila* 7-gene multi-locus profiles, open this comparison panel:
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/30067913-9d18-419b-80ed-a9cdc7a0240a" alt="subspecies_pca_comparison_panel" width="85%" />
+  <img src="assets/subspecies_pca_comparison_panel.png" alt="subspecies_pca_comparison_panel" width="85%" />
   <p><i>Figure: Dimensionality reduction comparing full cohort ground truth (Left) against unseen kNN validation models (Right).</i></p>
 </div>
 </details>
-
 
 <details>
 <summary><b>📊 Click to view KNN Performance Metrics (knn_performance_metrics.txt)</b></summary>
