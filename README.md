@@ -322,10 +322,9 @@ This heatmap maps the predictive weights (Log-Odds Coefficients) calculated by t
 This Maximum-Likelihood consensus tree resolves the phylogenetic relationships across the target cohort based on core genome k-mer SNP alignments. High-confidence bootstrap support configurations (value of 100) are mapped onto the nodes:
 
 <div align="center">
-  <!-- Paste your new tree asset link inside the src quotes below -->
-  <img src="https://github.com/user-attachments/assets/6edec3e2-150d-4bd6-b41e-9f810655e1fa" alt="Core Genome Phylogeny Tree" width="100%" style="background-color: white !important; padding: 15px; border-radius: 6px; border: 1px solid #e1e4e8;" alt="Core Genome Phylogeny Tree with Bootstraps" width="100%" style="background-color: white !important; padding: 15px; border-radius: 6px; border: 1px solid #e1e4e8;" />
+  <img src="assets/core_bootstrap_tree.png" alt="Core Genome Phylogeny Tree with Bootstraps" width="100%" style="background-color: white !important; padding: 15px; border-radius: 6px; border: 1px solid #e1e4e8;" />
   <br><br>
-  
+
   <p><i>Figure: Midpoint-rooted phylogenetic tree computed via IQ-TREE. Branch text numbers indicate standard bootstrap support metrics calculated across 1,000 replicate pairings, demonstrating maximum confidence values across all major nodes.</i></p>
 </div>
 </details>
