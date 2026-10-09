@@ -145,7 +145,7 @@ Requirements scale dynamically depending on your cohort batch sizing. Minimum al
 
 ---
 
-## 🚀 How to Run It (Usage)
+## 🚀 How to Run Clearwater(Usage)?
 
 ### 1. Clone the repository
 ```
