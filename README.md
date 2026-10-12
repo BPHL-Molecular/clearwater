@@ -207,6 +207,8 @@ results_output/
 │   └── elgato_out/                      # Targeted MLST or specific genotyping outputs
 ├── checkm_qc/                           # Quality control and genome completeness assessments
 ├── pangenome_analysis/
+│   ├── cloud_genes_sample_map.txt       # Mapping of cloud genes across specific samples
+│   ├── core_genes_list.txt              # Definitive list of identified core genome features
 │   └── roary_out/
 │       ├── gene_presence_absence.csv    # Global pangenome matrix spreadsheet
 │       ├── summary_statistics.txt       # Breakdown of Core, Shell, and Cloud distributions
@@ -231,6 +233,7 @@ results_output/
 └── bootstrap_tree/                      # IQ-TREE consensus tree and support value mappings
     ├── core_bootstrap.iqtree            # Detailed IQ-TREE execution log, models, and text-based tree
     └── core_bootstrap.treefile          # Maximum-likelihood consensus tree file (Newick format)
+
 ```
 ### 📈 Generated Visualizations & Performance
 
