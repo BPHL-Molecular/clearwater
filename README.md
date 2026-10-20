@@ -52,17 +52,27 @@ graph TD
         elgato4mlst --> legsta[legsta]
         legsta -->|ch_legsta_out| kraken_subs[kraken_subs]
         kraken_db_file --> kraken_subs
-        
+
         kraken_subs -->|ch_kraken_out| proc_mash[proc_mash]
         proc_mash --> pyProc1[pyProc1]
         pyProc1 --> prokka[prokka]
     end
 
     %% Asynchronous Batch / Collection Parallel Pathways
-    subgraph Core_SNP_Phylogeny [Core Genome Assembly Branch]
+    subgraph Core_SNP_Phylogeny [Core Genome Assembly & Phylogeny Branch]
         ch_samples -->|collect| ch_collected_fastas(Collected FASTAs)
         ch_collected_fastas --> ksnp4[ksnp4]
         ksnp4 -->|run_dir| iqtree_bootstrap[iqtree_bootstrap]
+        iqtree_bootstrap --> annotate_tree[annotate_tree]
+        ksnp4 --> calculate_snp_matrix[calculate_snp_matrix]
+        calculate_snp_matrix --> cluster_transmission_chains[cluster_transmission_chains]
+    end
+
+    %% Surveillance Modules (Brand New!)
+    subgraph Surveillance_Modules [Surveillance Modules Branch]
+        ch_collected_fastas --> run_chewbbaca_cgmlst[run_chewbbaca_cgmlst]
+        run_chewbbaca_cgmlst --> generate_cgmlst_report[generate_cgmlst_report]
+        ch_collected_fastas --> run_mob_typer[run_mob_typer]
     end
 
     subgraph Assembly_QC [Asynchronous Quality Control]
@@ -75,17 +85,18 @@ graph TD
         map_gff -->|collect| ch_collected_gffs(Collected GFFs Array)
         ch_collected_gffs --> PANGENOME_ANALYSIS[PANGENOME_ANALYSIS]
         PANGENOME_ANALYSIS -->|run_dir| PLOT_PANGENOME[PLOT_PANGENOME]
+        PANGENOME_ANALYSIS --> EXTRACT_CLOUD_MAP[EXTRACT_CLOUD_MAP]
     end
 
     %% Linear Chain Post-Prokka
     subgraph Individual_Annotation_and_ANI [ANI Verification Loop]
         prokka -->|ch_prokka_out| pyProc4[pyProc4]
         pyProc4 --> pyProc5[pyProc5]
-        
+
         %% Combined Logic
         pyProc5 -->|ch_processed_samples| combine_checkm{combine}
         checkm_qc -->|results_dir| combine_checkm
-        
+
         combine_checkm -->|ch_with_checkm| pyProc3[pyProc3]
         pyProc3 -->|ch_ani_inputs| runFastANI[runFastANI]
         ch_ref_dir --> runFastANI
@@ -93,27 +104,32 @@ graph TD
 
     %% Consolidation and Statistical Analytics Node
     subgraph Final_Reporting_Analytics [Reporting & Downstream Analytics]
-        runFastANI -->|ch_ani_outputs| pyProc6[pyProc6]
+        runFastANI -->|ch_ani_outputs| pyProc6[pyProc6 / parseANILog]
         pyProc6 --> pyProc7[pyProc7]
-        
+
         pyProc7 -->|ch_global_report| map_report{Map report.txt}
         map_report -->|collect| all_reports_ch(All Sample Reports Array)
-        
+
         all_reports_ch --> compile_report[compile_report]
         compile_report -->|global_report| data_preprop[data_preprop]
-        data_preprop -->|imputed_report| knn_classifier[knn_classifier]
         
-        %% NEW STEPS ADDED HERE
-        knn_classifier -->|knn_results| pca_analysis[pca_analysis]
-        pca_analysis --> firth_regression[firth_regression]
+        %% Machine Learning Pathway
+        data_preprop -->|imputed_report| KNN_CLASSIFICATION[KNN_CLASSIFICATION]
+        KNN_CLASSIFICATION --> cv_confusionMatrix[cv_confusionMatrix]
+        data_preprop --> PCA_VISUALIZATION[PCA_VISUALIZATION]
+        
+        %% Regression & Regularization Pipeline
+        data_preprop --> firth_regression[firth_regression]
         firth_regression --> SKLEARN_LASSO[SKLEARN_LASSO]
     end
 
     %% Assigning Classes for Visual Identification
     class P1,P2,P3 params;
-    class elgato4mlst,legsta,kraken_subs,proc_mash,pyProc1,prokka,pyProc4,pyProc5,ksnp4,iqtree_bootstrap,checkm_qc,PANGENOME_ANALYSIS,PLOT_PANGENOME,pyProc3,runFastANI,pyProc6,pyProc7,compile_report,data_preprop,knn_classifier,pca_analysis,firth_regression,SKLEARN_LASSO process;
+    class elgato4mlst,legsta,kraken_subs,proc_mash,pyProc1,prokka,pyProc4,pyProc5,ksnp4,iqtree_bootstrap,annotate_tree,calculate_snp_matrix,cluster_transmission_chains,run_chewbbaca_cgmlst,generate_cgmlst_report,run_mob_typer,checkm_qc,PANGENOME_ANALYSIS,PLOT_PANGENOME,EXTRACT_CLOUD_MAP,pyProc3,runFastANI,pyProc6,pyProc7,compile_report,data_preprop,KNN_CLASSIFICATION,cv_confusionMatrix,PCA_VISUALIZATION,firth_regression,SKLEARN_LASSO process;
     class ch_samples,ch_ref_dir,ch_collected_fastas,ch_collected_gffs,all_reports_ch channel;
     class combine_checkm,map_gff,map_report collection;
+
+
 ```
 ---
 
