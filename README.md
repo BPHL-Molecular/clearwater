@@ -247,7 +247,7 @@ nextflow run clearwater_wf.nf   --input "/path/to/your/samples_fasta_dir"   --kr
 For high-performance computing clusters running the SLURM workload manager, inspect the provided script template, adjust your paths/parameters inside it, and submit the job:
 
 ```bash
-sbatch pipeline_run.sh
+sbatch clearwater_run.sh
 ```
 
 ### 📋 Metadata File Format (.csv)
@@ -431,3 +431,5 @@ This Maximum-Likelihood consensus tree resolves the phylogenetic relationships a
   <p><i>Figure: Midpoint-rooted phylogenetic tree computed via IQ-TREE. Branch text numbers indicate standard bootstrap support metrics calculated across 1,000 replicate pairings, demonstrating maximum confidence values across all major nodes.</i></p>
 </div>
 </details>
+
+### Run Clearwater on as many (ex. >= 30) samples as possible to appreciate its performance.
