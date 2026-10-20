@@ -35,15 +35,23 @@ This chart outlines how independent single-sample data streams run alongside asy
 graph TD
     %% Configuration and Styling
     classDef params fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef optionalParams fill:#fcc,stroke:#333,stroke-width:1px,stroke-dasharray: 5 5;
     classDef process fill:#bbf,stroke:#333,stroke-width:1px;
     classDef channel fill:#dfd,stroke:#333,stroke-width:1px;
     classDef collection fill:#ffd27f,stroke:#333,stroke-width:1px;
 
     %% Input Configurations / Parameters
-    subgraph Input_Parameters [Pipeline Inputs]
+    subgraph Input_Parameters [Pipeline Inputs & Configurations]
         P1[params.input] -->|*.fasta| ch_samples(ch_samples channel)
-        P2[params.ref_genomes_dir] --> ch_ref_dir(ch_ref_dir Value Channel)
         P3[params.krakenSub_db] --> kraken_db_file[krakenSub_db File]
+        
+        %% Optional Parameters
+        P2[params.ref_genomes_dir]:::optionalParams -->|Optional for ANI| ch_ref_dir(ch_ref_dir Value Channel)
+        P4[params.metadata]:::optionalParams -->|Optional Metadata| ch_metadata(ch_metadata Value Channel)
+        
+        %% Value Threshold Configurations
+        T1[params.snp_threshold]:::params -->|default: 3| ch_snp_thresh(SNP Threshold)
+        T2[params.cgmlst_threshold]:::params -->|default: 7| ch_cgmlst_thresh(cgMLST Threshold)
     end
 
     %% Parallel Sample Processing Stream (Linear Chain)
@@ -63,15 +71,21 @@ graph TD
         ch_samples -->|collect| ch_collected_fastas(Collected FASTAs)
         ch_collected_fastas --> ksnp4[ksnp4]
         ksnp4 -->|run_dir| iqtree_bootstrap[iqtree_bootstrap]
+        
+        %% Annotated Tree with Optional Metadata Matrix
         iqtree_bootstrap --> annotate_tree[annotate_tree]
+        ch_metadata -.->|Annotates tree| annotate_tree
+        
         ksnp4 --> calculate_snp_matrix[calculate_snp_matrix]
         calculate_snp_matrix --> cluster_transmission_chains[cluster_transmission_chains]
+        ch_snp_thresh --> cluster_transmission_chains
     end
 
-    %% Surveillance Modules (Brand New!)
+    %% Surveillance Modules
     subgraph Surveillance_Modules [Surveillance Modules Branch]
         ch_collected_fastas --> run_chewbbaca_cgmlst[run_chewbbaca_cgmlst]
         run_chewbbaca_cgmlst --> generate_cgmlst_report[generate_cgmlst_report]
+        ch_cgmlst_thresh --> generate_cgmlst_report
         ch_collected_fastas --> run_mob_typer[run_mob_typer]
     end
 
@@ -86,6 +100,7 @@ graph TD
         ch_collected_gffs --> PANGENOME_ANALYSIS[PANGENOME_ANALYSIS]
         PANGENOME_ANALYSIS -->|run_dir| PLOT_PANGENOME[PLOT_PANGENOME]
         PANGENOME_ANALYSIS --> EXTRACT_CLOUD_MAP[EXTRACT_CLOUD_MAP]
+        ch_metadata -.->|Annotates core gene distribution| PLOT_PANGENOME
     end
 
     %% Linear Chain Post-Prokka
@@ -99,7 +114,9 @@ graph TD
 
         combine_checkm -->|ch_with_checkm| pyProc3[pyProc3]
         pyProc3 -->|ch_ani_inputs| runFastANI[runFastANI]
-        ch_ref_dir --> runFastANI
+        
+        %% Conditional ANI Execution Vector
+        ch_ref_dir -.->|Evaluates if provided| runFastANI
     end
 
     %% Consolidation and Statistical Analytics Node
@@ -124,9 +141,10 @@ graph TD
     end
 
     %% Assigning Classes for Visual Identification
-    class P1,P2,P3 params;
+    class P1,P3,T1,T2 params;
+    class P2,P4 optionalParams;
     class elgato4mlst,legsta,kraken_subs,proc_mash,pyProc1,prokka,pyProc4,pyProc5,ksnp4,iqtree_bootstrap,annotate_tree,calculate_snp_matrix,cluster_transmission_chains,run_chewbbaca_cgmlst,generate_cgmlst_report,run_mob_typer,checkm_qc,PANGENOME_ANALYSIS,PLOT_PANGENOME,EXTRACT_CLOUD_MAP,pyProc3,runFastANI,pyProc6,pyProc7,compile_report,data_preprop,KNN_CLASSIFICATION,cv_confusionMatrix,PCA_VISUALIZATION,firth_regression,SKLEARN_LASSO process;
-    class ch_samples,ch_ref_dir,ch_collected_fastas,ch_collected_gffs,all_reports_ch channel;
+    class ch_samples,ch_ref_dir,ch_metadata,ch_collected_fastas,ch_collected_gffs,all_reports_ch channel;
     class combine_checkm,map_gff,map_report collection;
 
 
@@ -220,8 +238,16 @@ results_output/
 │   ├── prokka_out/                      # GFF, FAA, FNA, and GBK file maps
 │   ├── kraken_out/                      # Taxonomic classification and metagenomic profiling
 │   ├── mash_out/                        # Genomic distance estimations and MinHash sketches
-│   └── elgato_out/                      # Targeted MLST or specific genotyping outputs
+│   ├── elgato_out/                      # Targeted MLST or specific genotyping outputs
+│   └── mob_suite_out/                   # Plasmid typing and reconstruction metrics per sample [NEW]
 ├── checkm_qc/                           # Quality control and genome completeness assessments
+├── fastani_out/                         # Pairwise Average Nucleotide Identity matrices [NEW]
+│   ├── fastani_matrix.txt               # Symmetrical identity comparison matrix
+│   └── fastani_log.txt                  # Complete run log and parsing metadata
+├── cgmlst_surveillance/                 # Core Genome MLST cluster surveillance [NEW]
+│   ├── chewbbaca_alleles/               # Called allele profiles and schema information
+│   ├── cgmlst_matrix.tsv                # Comprehensive sample-by-allele profile matrix
+│   └── cgmlst_outbreak_report.txt       # Cluster identification based on cgmlst_threshold
 ├── pangenome_analysis/
 │   ├── cloud_genes_sample_map.txt       # Mapping of cloud genes across specific samples
 │   ├── core_genes_list.txt              # Definitive list of identified core genome features
@@ -232,12 +258,14 @@ results_output/
 ├── pangenome_plots/                     # Visualizations of the pangenome structure
 │   ├── pangenome_frequency.png          # Gene frequency distribution plot
 │   ├── pangenome_matrix.png             # Presence/absence matrix heatmap
-│   └── pangenome_pie.png                # Core vs. Cloud distribution pie chart
+│   └── pangenome_pie.png                # Core vs. Cloud distribution pie chart (Metadata-annotated)
 ├── pca_plots/                           # Dimensionality reduction outputs
 │   └── subspecies_pca_comparison_panel  # Comparative PCA scatter layout across cohorts
 ├── knn_classification_results/          # Supervised machine learning performance data
 │   ├── knn_performance_metrics.txt      # Model precision, recall, and accuracy scores
-│   └── knn_predicted_subspecies         # Assigned taxonomic classifications per sample
+│   ├── knn_predicted_subspecies         # Assigned taxonomic classifications per sample
+│   └── cross_validation/                # Cross-validation performance evaluations [NEW]
+│       └── confusion_matrix.png         # Classification evaluation matrix plot
 ├── lassoMregression_results/
 │   ├── lasso_model_summary.txt          # Model feature selection stats
 │   ├── lasso_coefficients_reportingTable.csv # Feature performance scores
@@ -246,9 +274,12 @@ results_output/
 ├── firth_multinomial_formatted.txt      # Pre-formatted regression input data array
 ├── firth_multinomial_results.txt        # Firth-corrected logistic regression p-values and log-odds
 ├── ksnp_out/                            # Core k-mer SNP phylogenetics and validation files
+│   ├── snp_distance_matrix.tsv          # Symmetrical pairwise SNP distance matrix [NEW]
+│   └── transmission_clusters.txt        # Transmission chains grouped by snp_threshold [NEW]
 └── bootstrap_tree/                      # IQ-TREE consensus tree and support value mappings
     ├── core_bootstrap.iqtree            # Detailed IQ-TREE execution log, models, and text-based tree
-    └── core_bootstrap.treefile          # Maximum-likelihood consensus tree file (Newick format)
+    ├── core_bootstrap.treefile          # Maximum-likelihood consensus tree file (Newick format)
+    └── annotated_tree.png               # Metadata-integrated high-resolution tree visualization [NEW]
 
 ```
 ### 📈 Generated Visualizations & Performance
