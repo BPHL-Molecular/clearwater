@@ -17,16 +17,21 @@ This pipeline provides a unified "sequence-to-insight" workflow for raw bacteria
 
 * **In Silico Serotyping & Subtyping:** Leverages `ELGATO` and `Legsta` for automated sequence typing (MLST).
 * **Taxonomic Assignment:** Uses `Kraken2` for deep subspecies-level identification.
+* **Genomic Surveillance & Typing:**
+  * **cgMLST Profiling:** Runs `chewBBACA` to call alleles and generate comprehensive core genome MLST matrices for high-resolution cluster tracking.
+  * **Plasmid Epidemiology:** Utilizes `MOB-Suite` (`mob_typer`) to reconstruct and type plasmid markers across assemblies.
 * **Assembly Quality Control:** Runs asynchronous `CheckM` evaluations to assess completeness and contamination.
 * **Core & Pan-Genomic Phylogeny:** 
-  * Identifies reference-free core SNPs and builds bootstrapped trees using `kSNP4` and `IQ-TREE`.
-  * Generates structural annotations (`Prokka`) and executes gene-family clustering (`Roary`) to map the pangenome matrix.
-* **Comparative Genomics:** Calculates Average Nucleotide Identity (`FastANI`) against reference libraries.
+  * Identifies reference-free core SNPs using `kSNP4`, calculates symmetrical pairwise **SNP distance matrices**, and clusters isolates into high-precision **transmission chains**.
+  * Builds bootstrapped maximum-likelihood trees using `IQ-TREE` and generates publication-ready, metadata-integrated **annotated phylogenetic tree charts**.
+  * Generates structural annotations (`Prokka`) and executes gene-family clustering (`Roary`) to extract cloud maps and visualize the pangenome structure.
+* **Comparative Genomics:** Calculates reciprocal whole-genome Average Nucleotide Identity (`FastANI`) against reference libraries.
 * **Predictive Analytics & Advanced Modeling:** 
-  * Imputes missing loci elements (`miceforest`) and trains a **K-Nearest Neighbors (KNN)** classifier to resolve *L. pneumophila* subspecies.
+  * Imputes missing loci elements (`miceforest`) and trains a **K-Nearest Neighbors (KNN)** classifier to resolve *L. pneumophila* subspecies, complete with cross-validation **confusion matrix metrics**.
   * Conducts **Principal Component Analysis (PCA)** post-classification to visualize high-dimensional feature distributions and variance.
   * Subjects downstream profiles to data-driven **Firth Logistic Regression** alongside a terminal **Lasso Multinomial Logistic Regression** model for feature pruning and classification.
-
+  
+  > ?? **Why this matters:** By integrating predictive modeling directly into the pipeline, users can transition from purely descriptive genomics to active discovery�leveraging machine learning to automatically resolve complex subspecies classifications, control for statistical separation in highly similar cohorts, and isolate the exact genetic features driving outbreak profiles.
 ---
 ## 📊 Pipeline Workflow Diagram
 This chart outlines how independent single-sample data streams run alongside asynchronous, multi-sample cohort configurations:
@@ -146,8 +151,6 @@ graph TD
     class elgato4mlst,legsta,kraken_subs,proc_mash,pyProc1,prokka,pyProc4,pyProc5,ksnp4,iqtree_bootstrap,annotate_tree,calculate_snp_matrix,cluster_transmission_chains,run_chewbbaca_cgmlst,generate_cgmlst_report,run_mob_typer,checkm_qc,PANGENOME_ANALYSIS,PLOT_PANGENOME,EXTRACT_CLOUD_MAP,pyProc3,runFastANI,pyProc6,pyProc7,compile_report,data_preprop,KNN_CLASSIFICATION,cv_confusionMatrix,PCA_VISUALIZATION,firth_regression,SKLEARN_LASSO process;
     class ch_samples,ch_ref_dir,ch_metadata,ch_collected_fastas,ch_collected_gffs,all_reports_ch channel;
     class combine_checkm,map_gff,map_report collection;
-
-
 ```
 ---
 
@@ -160,18 +163,22 @@ The pipeline relies on a containerized or environment-managed runtime strategy t
 
 ### Container Registries (Docker / Singularity)
 The pipeline automatically fetches and launches isolated tool tasks using the following community layers:
-* `staphb/prokka:latest` — Structural genome annotations
-* `staphb/roary:latest` — High-performance pangenome calculation & graphing scripts
-* `staphb/ksnp4:latest` — Core k-mer SNP phylogenetics and file layout parsing
-* `staphb/kraken2:latest` — High-speed database string matching
+* `staphb/prokka:1.15.6` � Structural genome annotations
+* `staphb/roary:3.13.0` � High-performance pangenome calculation & graphing scripts
+* `staphb/ksnp4:4.1-2607` � Core k-mer SNP phylogenetics and file layout parsing
+* `staphb/kraken2:2.17.1` � High-speed database string matching
+* `quay.io/biocontainers/chewbbaca:3.3.3--pyhdfd78af_0` � Core Genome MLST (cgMLST) allele calling and profiling matrix extraction
+* `docker://quay.io/biocontainers/mob_suite:3.1.9--pyhdfd78af_0` � Plasmid typing, reconstruction, and biomarkers typing via MOB-typer
+* `staphb/fastani:1.34` � Fast, alignment-free computation of whole-genome Average Nucleotide Identity
+* `staphb/iqtree2:2.4.0` � Efficient and robust maximum-likelihood phylogenomic tree building with bootstrapping
 
 ### Conda Profiles (Local Fallbacks)
-Statistical and machine learning scripts drop down to local environment recipes utilizing:
-* `pandas` & `numpy` (Structured data parsing matrices)
-* `scikit-learn` (KNN Classification engines, PCA dimensionality reduction, and Lasso Multinomial Logistic Regression modeling)
+Statistical, machine learning, and reporting scripts drop down to local environment recipes utilizing:
+* `pandas` & `numpy` (Structured data parsing matrices and custom pairwise SNP distance computations)
+* `scikit-learn` (KNN Classification engines, PCA dimensionality reduction, Lasso Multinomial Logistic Regression modeling, and cross-validation confusion matrix metrics)
 * `miceforest` (Iterative Chained Equations imputation)
-* `matplotlib` & `seaborn` (Statistical matrix plotters & scatter/heatmap visualization engines)
-
+* `matplotlib` & `seaborn` (Statistical matrix plotters, scatter layouts, heatmaps, and classification confusion matrix visualizations)
+* `biopython` (Phylogenetic tree topology parsing and programmatic metadata rendering layouts)
 ---
 
 ## 💻 Resources Required
@@ -189,13 +196,14 @@ Requirements scale dynamically depending on your cohort batch sizing. Minimum al
 
 ## 🚀 How to Run Clearwater(Usage)?
 
-### 1. Clone the repository
+### 1. Clone the repository and change to your cloned directory
 ```
 git clone https://github.com/BPHL-Molecular/clearwater.git
+cd clearwater
 ```
 
 ### 2. Configure Parameters
-Set up your file paths and parameters inside a params.yaml file or declare them inline during runtime execution.
+Set up your file paths and parameters inside a `params.yaml` file or declare them inline during runtime execution.
 
 ### 3. Automatically create the pipeline conda environment to upload all conda packages
 #### a) Execute this command on your terminal
@@ -208,23 +216,66 @@ conda activate CLEARWATER
 ```
 ### 4. Execute Clearwater (2 options)
 
-#### 4.1. Standard Execution Command
+#### 4.1. Option 1: Standard Execution Command & Configuration
+
 Launch the master execution run by pointing to your local directory architecture:
 
 ```bash
 nextflow run clearwater_wf.nf \
   --input "/path/to/your/samples_fasta_dir" \
-  --ref_genomes_dir "/path/to/reference_library" \
   --krakenSub_db "/path/to/kraken_database_files" \
   --output "results_output" \
+  --ref_genomes_dir "/path/to/reference_library" \
+  --metadata "/path/to/epidemiological_metadata.csv" \
+  --snp_threshold 3 \
+  --cgmlst_threshold 7 \
   -profile apptainer
 ```
+
+### ?? Parameter Configuration Matrix
+
+| Parameter Flag | Type / Requirement | Default Value | Downstream Behavior Impact |
+| :--- | :--- | :--- | :--- |
+| **`--input`** | ?? **Required** | *None* | Roots the entry channel with assembly targets (`*.fasta`). |
+| **`--krakenSub_db`** | ?? **Required** | *None* | Feeds database string matches directly into `kraken_subs`. |
+| **`--output`** | ?? **Required** | *None* | Destination directory path for your structural tree layouts. |
+| **`--ref_genomes_dir`** | ?? **Optional** | *None* | Omit to completely bypass the **runFastANI** analysis loop. |
+| **`--metadata`** | ?? **Optional** | *None* | Omit to bypass plotting annotations on trees and pangenomes. |
+| **`--snp_threshold`** | ?? **Default** | **`3`** | Value threshold passed to `cluster_transmission_chains`. |
+| **`--cgmlst_threshold`** | ?? **Default** | **`7`** | Outbreak cluster verification cut-off for cgMLST logs. |
+
 *To resume an interrupted or cached pipeline run without reprocessing completed steps, add the `-resume` flag.*
 
-#### 4.2. Run the provided sbatch script (check it and adjust path)
+#### 4.2. Option 2: Run the provided sbatch script (SLURM Cluster Environments)
+For high-performance computing clusters running the SLURM workload manager, inspect the provided script template, adjust your paths/parameters inside it, and submit the job:
+
 ```bash
 sbatch clearwater_run.sh
 ```
+### ?? Metadata File Format (.csv)
+When using the optional `--metadata` flag, provide a comma-separated values (`.csv`) file structured exactly as shown below.
+<details>
+<summary><b>Click to expand metadata format and column specifications</b></summary>
+
+<br>
+
+#### Sample Template Example:
+```csv
+SampleID,County,State/Territory,Year,Isolate_Sources
+Isolate_01,Miami-Dade,FL,2026,Environmental
+Isolate_02,Leon,FL,2025,Clinical
+Isolate_03,Fulton,GA,2026,Clinical
+```
+
+#### Field Specifications:
+*   **`SampleID` (First Column):** ?? **Required.** Entries *must exactly match* the filename prefixes of your input `*.fasta` assemblies (e.g., if your file is `Isolate_01.fasta`, the ID must be `Isolate_01`). This string forms the relational join key used to overlay metadata bands onto tree tips and pangenome heatmaps.
+*   **`County`:** ?? **Optional.** Categorical metadata designating geographic county origin.
+*   **`State/Territory`:** ?? **Optional.** Categorical metadata designating state or regional boundary origin.
+*   **`Year`:** ?? **Optional.** Temporal metadata tracking isolation chronology.
+*   **`Isolate_Sources`:** ?? **Optional.** Biological or environmental context category (e.g., Clinical, Coolingtower, Potable Water) utilized by `annotate_tree`, `PANGENOME_ANALYSIS, and `PLOT_PANGENOME` for automatic group coloring.
+
+</details>
+
 
 ---
 
@@ -239,12 +290,12 @@ results_output/
 │   ├── kraken_out/                      # Taxonomic classification and metagenomic profiling
 │   ├── mash_out/                        # Genomic distance estimations and MinHash sketches
 │   ├── elgato_out/                      # Targeted MLST or specific genotyping outputs
-│   └── mob_suite_out/                   # Plasmid typing and reconstruction metrics per sample [NEW]
+│   └── mob_suite_out/                   # Plasmid typing and reconstruction metrics per sample
 ├── checkm_qc/                           # Quality control and genome completeness assessments
-├── fastani_out/                         # Pairwise Average Nucleotide Identity matrices [NEW]
+├── fastani_out/                         # Pairwise Average Nucleotide Identity matrices
 │   ├── fastani_matrix.txt               # Symmetrical identity comparison matrix
 │   └── fastani_log.txt                  # Complete run log and parsing metadata
-├── cgmlst_surveillance/                 # Core Genome MLST cluster surveillance [NEW]
+├── cgmlst_surveillance/                 # Core Genome MLST cluster surveillance
 │   ├── chewbbaca_alleles/               # Called allele profiles and schema information
 │   ├── cgmlst_matrix.tsv                # Comprehensive sample-by-allele profile matrix
 │   └── cgmlst_outbreak_report.txt       # Cluster identification based on cgmlst_threshold
@@ -264,7 +315,7 @@ results_output/
 ├── knn_classification_results/          # Supervised machine learning performance data
 │   ├── knn_performance_metrics.txt      # Model precision, recall, and accuracy scores
 │   ├── knn_predicted_subspecies         # Assigned taxonomic classifications per sample
-│   └── cross_validation/                # Cross-validation performance evaluations [NEW]
+│   └── cross_validation/                # Cross-validation performance evaluations
 │       └── confusion_matrix.png         # Classification evaluation matrix plot
 ├── lassoMregression_results/
 │   ├── lasso_model_summary.txt          # Model feature selection stats
@@ -274,12 +325,12 @@ results_output/
 ├── firth_multinomial_formatted.txt      # Pre-formatted regression input data array
 ├── firth_multinomial_results.txt        # Firth-corrected logistic regression p-values and log-odds
 ├── ksnp_out/                            # Core k-mer SNP phylogenetics and validation files
-│   ├── snp_distance_matrix.tsv          # Symmetrical pairwise SNP distance matrix [NEW]
-│   └── transmission_clusters.txt        # Transmission chains grouped by snp_threshold [NEW]
+│   ├── snp_distance_matrix.tsv          # Symmetrical pairwise SNP distance matrix
+│   └── transmission_clusters.txt        # Transmission chains grouped by snp_threshold
 └── bootstrap_tree/                      # IQ-TREE consensus tree and support value mappings
     ├── core_bootstrap.iqtree            # Detailed IQ-TREE execution log, models, and text-based tree
     ├── core_bootstrap.treefile          # Maximum-likelihood consensus tree file (Newick format)
-    └── annotated_tree.png               # Metadata-integrated high-resolution tree visualization [NEW]
+    └── annotated_tree.png               # Metadata-integrated high-resolution tree visualization
 
 ```
 ### 📈 Generated Visualizations & Performance
