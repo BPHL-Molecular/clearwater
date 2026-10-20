@@ -1,17 +1,17 @@
-# Pipeline
+# Clearwater
 <table>
   <tr>
     <td valign="top" width="15%">
       <img src="https://github.com/user-attachments/assets/6eecc007-cd6b-4ef3-ba2c-9bde5eef66ab" alt="Clear Water" width="100%" />
     </td>
     <td valign="top">
-      <h2>Pipeline is a scalable, automated <strong>Nextflow DSL2 pipeline</strong> for genomic characterization, quality control, phylogenetic mapping, and machine learning-driven subtyping of <em>Legionella pneumophila</em> assemblies.</h2>
+      <h2>Clearwater is a scalable, automated <strong>Nextflow DSL2 pipeline</strong> for genomic characterization, quality control, phylogenetic mapping, and machine learning-driven subtyping of <em>Legionella pneumophila</em> assemblies.</h2>
     </td>
   </tr>
 </table>
 
 
-## 📖 What Pipeline Does
+## 📖 What Clearwater Does
 
 This pipeline provides a unified "sequence-to-insight" workflow for raw bacterial FASTA assemblies. It processes strains simultaneously through a hybrid architecture of linear analytical steps and asynchronous multi-sample cohort steps:
 
@@ -35,7 +35,7 @@ This pipeline provides a unified "sequence-to-insight" workflow for raw bacteria
 
 ---
 
-## 📊 Pipeline Workflow Diagram
+## 📊 Clearwater Workflow Diagram
 This chart outlines how independent single-sample data streams run alongside asynchronous, multi-sample cohort configurations:
 
 ```mermaid
@@ -159,7 +159,7 @@ graph TD
 
 ## 🛠 Dependencies
 
-The pipeline relies on a containerized or environment-managed runtime strategy to maximize reproducibility. You do not need to install the individual bioinformatics utilities manually.
+Clearwater relies on a containerized or environment-managed runtime strategy to maximize reproducibility. You do not need to install the individual bioinformatics utilities manually.
 
 ### Core Frameworks
 * **Nextflow** (Runtime tool; Java-based engine)
@@ -202,8 +202,8 @@ Requirements scale dynamically depending on your cohort batch sizing. Minimum al
 
 ### 1. Clone the repository and change to your cloned directory
 ```bash
-git clone https://github.com/BPHL-Molecular/pipeline.git
-cd pipeline
+git clone https://github.com/BPHL-Molecular/clearwater.git
+cd clearwater 
 ```
 
 ### 2. Configure Parameters
@@ -212,11 +212,11 @@ Set up your file paths and parameters inside a `params.yaml` file or declare the
 ### 3. Automatically create the pipeline conda environment to upload all conda packages
 #### a) Execute this command on your terminal
 ```bash
-conda env create -f PIPELINEenvironment.yml
+conda env create -f CLEARWATERenvironment.yml
 ```
 #### b) Activate the created environment
 ```bash
-conda activate PIPELINE
+conda activate CLEARWATER
 ```
 
 ### 4. Execute Clearwater (2 options)
