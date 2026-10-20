@@ -1,17 +1,17 @@
-# Clearwater
+# Pipeline
 <table>
   <tr>
     <td valign="top" width="15%">
       <img src="https://github.com/user-attachments/assets/6eecc007-cd6b-4ef3-ba2c-9bde5eef66ab" alt="Clear Water" width="100%" />
     </td>
     <td valign="top">
-      <h2>Clearwater is a scalable, automated <strong>Nextflow DSL2 pipeline</strong> for genomic characterization, quality control, phylogenetic mapping, and machine learning-driven subtyping of <em>Legionella pneumophila</em> assemblies.</h2>
+      <h2>Pipeline is a scalable, automated <strong>Nextflow DSL2 pipeline</strong> for genomic characterization, quality control, phylogenetic mapping, and machine learning-driven subtyping of <em>Legionella pneumophila</em> assemblies.</h2>
     </td>
   </tr>
 </table>
 
 
-## 📖 What Clearwater Does
+## 📖 What Pipeline Does
 
 This pipeline provides a unified "sequence-to-insight" workflow for raw bacterial FASTA assemblies. It processes strains simultaneously through a hybrid architecture of linear analytical steps and asynchronous multi-sample cohort steps:
 
@@ -31,8 +31,10 @@ This pipeline provides a unified "sequence-to-insight" workflow for raw bacteria
   * Conducts **Principal Component Analysis (PCA)** post-classification to visualize high-dimensional feature distributions and variance.
   * Subjects downstream profiles to data-driven **Firth Logistic Regression** alongside a terminal **Lasso Multinomial Logistic Regression** model for feature pruning and classification.
   
-  > ?? **Why this matters:** By integrating predictive modeling directly into the pipeline, users can transition from purely descriptive genomics to active discovery�leveraging machine learning to automatically resolve complex subspecies classifications, control for statistical separation in highly similar cohorts, and isolate the exact genetic features driving outbreak profiles.
+  > 💡 **Why this matters:** By integrating predictive modeling directly into the pipeline, users can transition from purely descriptive genomics to active discovery—leveraging machine learning to automatically resolve complex subspecies classifications, control for statistical separation in highly similar cohorts, and isolate the exact genetic features driving outbreak profiles.
+
 ---
+
 ## 📊 Pipeline Workflow Diagram
 This chart outlines how independent single-sample data streams run alongside asynchronous, multi-sample cohort configurations:
 
@@ -152,6 +154,7 @@ graph TD
     class ch_samples,ch_ref_dir,ch_metadata,ch_collected_fastas,ch_collected_gffs,all_reports_ch channel;
     class combine_checkm,map_gff,map_report collection;
 ```
+
 ---
 
 ## 🛠 Dependencies
@@ -164,7 +167,7 @@ The pipeline relies on a containerized or environment-managed runtime strategy t
 ### Container Registries (Docker / Singularity)
 The pipeline automatically fetches and launches isolated tool tasks using the following community layers:
 * `staphb/prokka:1.15.6` - Structural genome annotations
-* `staphb/roary:3.13.0` -  High-performance pangenome calculation & graphing scripts
+* `staphb/roary:3.13.0` - High-performance pangenome calculation & graphing scripts
 * `staphb/ksnp4:4.1-2607` - Core k-mer SNP phylogenetics and file layout parsing
 * `staphb/kraken2:2.17.1` - High-speed database string matching
 * `quay.io/biocontainers/chewbbaca:3.3.3--pyhdfd78af_0` - Core Genome MLST (cgMLST) allele calling and profiling matrix extraction
@@ -179,9 +182,10 @@ Statistical, machine learning, and reporting scripts drop down to local environm
 * `miceforest` (Iterative Chained Equations imputation)
 * `matplotlib` & `seaborn` (Statistical matrix plotters, scatter layouts, heatmaps, and classification confusion matrix visualizations)
 * `biopython` (Phylogenetic tree topology parsing and programmatic metadata rendering layouts)
+
 ---
 
-## ## 💻 Resources Required
+## 💻 Resources Required
 
 Requirements scale dynamically depending on your cohort batch sizing. Minimum allocations for the **10-sample testing baseline** include:
 
@@ -194,12 +198,12 @@ Requirements scale dynamically depending on your cohort batch sizing. Minimum al
 
 ---
 
-## 🚀 How to Run Clearwater(Usage)?
+## 🚀 How to Run Clearwater (Usage)?
 
 ### 1. Clone the repository and change to your cloned directory
-```
-git clone https://github.com/BPHL-Molecular/clearwater.git
-cd clearwater
+```bash
+git clone https://github.com/BPHL-Molecular/pipeline.git
+cd pipeline
 ```
 
 ### 2. Configure Parameters
@@ -208,12 +212,13 @@ Set up your file paths and parameters inside a `params.yaml` file or declare the
 ### 3. Automatically create the pipeline conda environment to upload all conda packages
 #### a) Execute this command on your terminal
 ```bash
-conda env create -f CLEARWATERenvironment.yml
+conda env create -f PIPELINEenvironment.yml
 ```
 #### b) Activate the created environment
 ```bash
-conda activate CLEARWATER
+conda activate PIPELINE
 ```
+
 ### 4. Execute Clearwater (2 options)
 
 #### 4.1. Option 1: Standard Execution Command & Configuration
@@ -221,28 +226,20 @@ conda activate CLEARWATER
 Launch the master execution run by pointing to your local directory architecture:
 
 ```bash
-nextflow run clearwater_wf.nf \
-  --input "/path/to/your/samples_fasta_dir" \
-  --krakenSub_db "/path/to/kraken_database_files" \
-  --output "results_output" \
-  --ref_genomes_dir "/path/to/reference_library" \
-  --metadata "/path/to/epidemiological_metadata.csv" \
-  --snp_threshold 3 \
-  --cgmlst_threshold 7 \
-  -profile apptainer
+nextflow run clearwater_wf.nf   --input "/path/to/your/samples_fasta_dir"   --krakenSub_db "/path/to/kraken_database_files"   --output "results_output"   --ref_genomes_dir "/path/to/reference_library"   --metadata "/path/to/epidemiological_metadata.csv"   --snp_threshold 3   --cgmlst_threshold 7   -profile apptainer
 ```
 
-### ?? Parameter Configuration Matrix
+### ⚙️ Parameter Configuration Matrix
 
 | Parameter Flag | Type / Requirement | Default Value | Downstream Behavior Impact |
 | :--- | :--- | :--- | :--- |
-| **`--input`** | ?? **Required** | *None* | Roots the entry channel with assembly targets (`*.fasta`). |
-| **`--krakenSub_db`** | ?? **Required** | *None* | Feeds database string matches directly into `kraken_subs`. |
-| **`--output`** | ?? **Required** | *None* | Destination directory path for your structural tree layouts. |
-| **`--ref_genomes_dir`** | ?? **Optional** | *None* | Omit to completely bypass the **runFastANI** analysis loop. |
-| **`--metadata`** | ?? **Optional** | *None* | Omit to bypass plotting annotations on trees and pangenomes. |
-| **`--snp_threshold`** | ?? **Default** | **`3`** | Value threshold passed to `cluster_transmission_chains`. |
-| **`--cgmlst_threshold`** | ?? **Default** | **`7`** | Outbreak cluster verification cut-off for cgMLST logs. |
+| **`--input`** | 🔴 **Required** | *None* | Roots the entry channel with assembly targets (`*.fasta`). |
+| **`--krakenSub_db`** | 🔴 **Required** | *None* | Feeds database string matches directly into `kraken_subs`. |
+| **`--output`** | 🔴 **Required** | *None* | Destination directory path for your structural tree layouts. |
+| **`--ref_genomes_dir`** | 🟡 **Optional** | *None* | Omit to completely bypass the **runFastANI** analysis loop. |
+| **`--metadata`** | 🟡 **Optional** | *None* | Omit to bypass plotting annotations on trees and pangenomes. |
+| **`--snp_threshold`** | ⚙️ **Default** | **`3`** | Value threshold passed to `cluster_transmission_chains`. |
+| **`--cgmlst_threshold`** | ⚙️ **Default** | **`7`** | Outbreak cluster verification cut-off for cgMLST logs. |
 
 *To resume an interrupted or cached pipeline run without reprocessing completed steps, add the `-resume` flag.*
 
@@ -250,10 +247,12 @@ nextflow run clearwater_wf.nf \
 For high-performance computing clusters running the SLURM workload manager, inspect the provided script template, adjust your paths/parameters inside it, and submit the job:
 
 ```bash
-sbatch clearwater_run.sh
+sbatch pipeline_run.sh
 ```
-### ?? Metadata File Format (.csv)
+
+### 📋 Metadata File Format (.csv)
 When using the optional `--metadata` flag, provide a comma-separated values (`.csv`) file structured exactly as shown below.
+
 <details>
 <summary><b>Click to expand metadata format and column specifications</b></summary>
 
@@ -268,20 +267,15 @@ Isolate_03,Fulton,GA,2026,Clinical
 ```
 
 #### Field Specifications:
-*   **`SampleID` (First Column):** ?? **Required.** Entries *must exactly match* the filename prefixes of your input `*.fasta` assemblies (e.g., if your file is `Isolate_01.fasta`, the ID must be `Isolate_01`). This string forms the relational join key used to overlay metadata bands onto tree tips and pangenome heatmaps.
-*   **`County`:** ?? **Optional.** Categorical metadata designating geographic county origin.
-*   **`State/Territory`:** ?? **Optional.** Categorical metadata designating state or regional boundary origin.
-*   **`Year`:** ?? **Optional.** Temporal metadata tracking isolation chronology.
-*   **`Isolate_Sources`:** ?? **Optional.** Biological or environmental context category (e.g., Clinical, Coolingtower, Potable Water) utilized by `annotate_tree`, `PANGENOME_ANALYSIS, and `PLOT_PANGENOME` for automatic group coloring.
+*   **`SampleID` (First Column):** 🔴 **Required.** Entries *must exactly match* the filename prefixes of your input `*.fasta` assemblies (e.g., if your file is `Isolate_01.fasta`, the ID must be `Isolate_01`). This string forms the relational join key used to overlay metadata bands onto tree tips and pangenome heatmaps.
+*   **`County`:** 🟡 **Optional.** Categorical metadata designating geographic county origin.
+*   **`State/Territory`:** 🟡 **Optional.** Categorical metadata designating state or regional boundary origin.
+*   **`Year`:** 🟡 **Optional.** Temporal metadata tracking isolation chronology.
+*   **`Isolate_Sources`:** 🟡 **Optional.** Biological or environmental context category (e.g., Clinical, Coolingtower, Potable Water) utilized by `annotate_tree`, `PANGENOME_ANALYSIS`, and `PLOT_PANGENOME` for automatic group coloring.
 
 </details>
 
-
 ---
-
-## 📂 Example of Output
-
-When execution finishes, the designated output directory (`params.output/`) will be populated with structured computational folders:
 
 ## 📂 Example of Output
 
@@ -352,9 +346,8 @@ To view the separation performance across *Legionella pneumophila* 7-gene multi-
 </details>
 
 <details>
-<summary><b>📈 Click to view KNN Performance Metrics (knn_performance_metrics.txt)</b></summary>
+<summary><b>📊 Click to view KNN Performance Metrics (knn_performance_metrics.txt)</b></summary>
 <br>
-
 
 Below is the evaluation summary and classification matrix generated by the machine learning module:
 
@@ -391,7 +384,6 @@ subsp. pneumophila | 0                  | 2
 
 This structured multi-panel visualization provides an overview of the global gene presence/absence patterns, frequency profiles, and pan-genome saturation distributions computed by the Roary analysis module:
 
-<div align="center">
   <table border="0" cellspacing="0" cellpadding="5" style="border-collapse: collapse; border: none; width: 100%;">
     <tr style="border: none;">
       <td align="center" valign="top" style="border: none; width: 33.33%;">
@@ -421,7 +413,6 @@ This structured multi-panel visualization provides an overview of the global gen
 This heatmap maps the predictive weights (Log-Odds Coefficients) calculated by the machine learning module to identify significant diagnostic allele predictors for each target subspecies class:
 
 <div align="center">
-  <!-- Paste your exact unique asset link inside the src quotes below -->
   <img src="https://github.com/user-attachments/assets/e505bb46-ca2f-44f0-9828-3245027fe0c7" alt="LASSO Multinomial Regression Diagnostic Allele Predictors" width="75%" />
   <p><i>Figure: LASSO multiclass predictive heatmap tracking diagnostic genetic variants (e.g., Gene_neuA_neuAh: 2.0 strongly predicting subsp. pneumophila with a -2.8307 log-odds coefficient shift).</i></p>
 </div>
@@ -440,5 +431,3 @@ This Maximum-Likelihood consensus tree resolves the phylogenetic relationships a
   <p><i>Figure: Midpoint-rooted phylogenetic tree computed via IQ-TREE. Branch text numbers indicate standard bootstrap support metrics calculated across 1,000 replicate pairings, demonstrating maximum confidence values across all major nodes.</i></p>
 </div>
 </details>
-
-### Test Clearwater out on more (>140) sample assemblies to evaluate its full performance.
