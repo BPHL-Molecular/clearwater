@@ -319,16 +319,23 @@ results_output/
 │   ├── lasso_model_summary.txt          # Model feature selection stats
 │   ├── lasso_coefficients_reportingTable.csv # Feature performance scores
 │   └── lasso_coefficients_heatmap.png   # Multiclass predictive heatmap
+├── firth_regression_analysis/           # Firth logistic regression structures and metrics
+│   ├── firth_multinomial_formatted.txt  # Pre-formatted regression input data array
+│   ├── firth_multinomial_results.txt    # Firth-corrected logistic regression p-values and log-odds
+│   └── cv_confusion_matrix_metrics.txt  # Cross-validation performance evaluations matrix
+├── transmission_analysis/               # Cluster tracking and SNP distance outputs
+│   ├── active_transmission_carriers.tsv  # Identified carrier samples within active chains
+│   ├── pairwise_snp_distance_matrix.tsv # Symmetrical pairwise SNP distance matrix
+│   └── transmission_clustering_summary.txt # Outbreak grouping summaries and cluster metrics
 ├── leg_sum_report.txt                   # Summary report file for the pipeline execution
-├── firth_multinomial_formatted.txt      # Pre-formatted regression input data array
-├── firth_multinomial_results.txt        # Firth-corrected logistic regression p-values and log-odds
 ├── ksnp_out/                            # Core k-mer SNP phylogenetics and validation files
-│   ├── snp_distance_matrix.tsv          # Symmetrical pairwise SNP distance matrix
-│   └── transmission_clusters.txt        # Transmission chains grouped by snp_threshold
+│   └── run_lpnSamref2/                  # Output subfolder for the current run configuration reference
+│       └── SNPs_all_matrix.fasta        # Comprehensive fasta alignment matrix of identified SNPs
 └── bootstrap_tree/                      # IQ-TREE consensus tree and support value mappings
     ├── core_bootstrap.iqtree            # Detailed IQ-TREE execution log, models, and text-based tree
     ├── core_bootstrap.treefile          # Maximum-likelihood consensus tree file (Newick format)
     └── annotated_tree.png               # Metadata-integrated high-resolution tree visualization
+
 ```
 
 ### 📊 Generated Visualizations & Performance
