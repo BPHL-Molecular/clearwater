@@ -11,7 +11,7 @@
 </table>
 
 ## Water is always involved
-Legionella bacteria are found naturally in freshwater environments, like lakes and streams. The bacteria can become a health concern when they grow and spread in human-made building water systems like cooling towers or complex plumbing systems. Besides the nice beach city of South Florida, this is what inspired thename Clearwater.
+Legionella bacteria are found naturally in freshwater environments, like lakes and streams. The bacteria can become a health concern when they grow and spread in human-made building water systems like cooling towers or complex plumbing systems. Besides the nice beach city of South Florida, this is what has inspired the name Clearwater.
 ## 📖 What Clearwater Does
 
 This pipeline provides a unified "sequence-to-insight" workflow for raw bacterial FASTA assemblies. It processes strains simultaneously through a hybrid architecture of linear analytical steps and asynchronous multi-sample cohort steps:
