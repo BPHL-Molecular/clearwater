@@ -2,8 +2,26 @@
 # If you are on HPG, datasebases are in the orange drive under the absolute path: "/orange/../legionelle_subspecies/krakendb_lpsubs/leg_subsp_customedDB"
 # Similarly, our Lp subspecies reference genomes (or you may download your own ones) are under the absolute path : "/orange/../legionelle_subspecies/reference_genomes"
 
-input: "/Your-Path-To/samples_fasta"
-output : "./output"
-krakenSub_db: "/PATH-To/krakendb_lpsubs/leg_subsp_customedDB" # Path to customed Kraken database of Legionella pneumophila subspecies
-ref_genomes_dir: "/PATH-To/reference_genomes" # optional flag (or omit it to skip ANI entirely without crashing) to use if you have reference genomes and need to calculate ANI
 
+# Pipeline Input Parameters
+input: "/Your-Path-To/samples_fasta"
+output: "./output"
+
+# Path to customed Kraken database of Legionella pneumophila subspecies
+krakenSub_db: "/PATH-To/krakendb_lpsubs/leg_subsp_customedDB"
+
+# Path to reference genomes for ANI calculation (optional, omit or set to false to skip ANI entirely)
+ref_genomes_dir: "/PATH-To/reference_genomes"
+
+# Location tracking, path to metadata file to annotate trees, pangenome matrix heatmap, and cloud gene table
+# Change to 'metadata: false' if the file is missing
+metadata: "/PATH-To/Your-medata-file"
+
+# Core-SNP Epidemiological Outbreak Threshold Configuration
+# Toggle the threshold between 3, 5, or 12 SNPs to keep things flexible.
+snp_threshold: 3
+
+# Core-genome MLST Outbreak Cluster Threshold Configuration
+# 7 being number of allelic distance(AD), change it based on your goal
+# Two strains differ by fewer than 7 alleles out of 3,000 are considered closely related
+cgmlst_threshold: 7

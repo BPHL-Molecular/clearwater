@@ -1,3 +1,5 @@
 # Copy samples from the path
 /orange/bphl-*/legionella_samples/test_samples/samples_fasta
 
+# copy sample's metadata from this path
+/orange/bphl-*/legionella_samples/metadata_dir/lp_metadata10_sampletest.csv

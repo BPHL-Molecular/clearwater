@@ -28,8 +28,8 @@ CONDA_PATH="/PATH-TO/USERNAME/conda/envs/CLEARWATER"
 nextflow run clearwater_wf.nf \
     -params-file params.yaml \
     -profile apptainer \
-    --process.withName:'data_preprop|firth_regression|pyProc.*'.container=null \
-    --process.withName:'firth_regression|pyProc.*'.conda="$CONDA_PATH" \
+    --process.withName:'datapreprop|firth_regression|cv_confusionMatrix|calculate_snp_matrix|cluster_transmission_chains|annotate_tree|generate_cgmlst_report|pyProc.*'.container=null \
+    --process.withName:'datapreprop|firth_regression|cv_confusionMatrix|calculate_snp_matrix|cluster_transmission_chains|annotate_tree|generate_cgmlst_report|pyProc.*'.conda="$CONDA_PATH" \
     -resume 
 
 # 3. Capture the status ("Grab the success/failure code") immediately before any other command runs
