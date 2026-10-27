@@ -476,13 +476,13 @@ This Maximum-Likelihood consensus tree resolves the phylogenetic relationships a
 
 <details>
 <summary><b>🚨 Click to view Genomic Epidemiology Surveillance Component (surveillance_reports/)</b></summary>
-<br>
 
-This section contains automated public health cluster alerts, transmission tracking summaries, and horizontal gene transfer tracking metrics across the 10-isolate cohort:
+This section contains automated public health cluster alerts, transmission tracking summaries, and horizontal gene transfer tracking metrics across the 10-isolate cohort.
 
-  <!-- SECTION A: TRANSMISSION CLUSTERING SUMMARY -->
-  <h3>A. Core Genome SNP Transmission Clustering Summary (transmission_analysis/)</h3>
-  <br>
+---
+
+### **A. Core Genome SNP Transmission Clustering Summary** (`transmission_analysis/`)
+
 ```text
 ==========================================================================================
 GENOMIC EPIDEMIOLOGY SUMMARY REPORT: LEGIONELLA PNEUMOPHILA TRANSMISSION CHAINS
@@ -499,16 +499,13 @@ TransmissionClusterID
 1 1 2 1 1 1 1 1 1 
 ==========================================================================================
 ```
-  <br>
-  <p><i>Table A: Summary report tracking tight core-genome SNP transmission chains. A single multi-isolate cluster containing 2 isolates is identified under the strict threshold criteria (Distance <= 2 SNPs).</i></p>
 
-  <br>
-  <hr style="border: 0; border-top: 1px dashed #e1e4e8; margin: 40px 0;">
-  <br>
+*Table A: Summary report tracking tight core-genome SNP transmission chains. A single multi-isolate cluster containing 2 isolates is identified under the strict threshold criteria (Distance <= 2 SNPs).*
 
-  <!-- SECTION B: CGMLST PUBLIC HEALTH REPORT -->
-  <h3>B. Core Genome Multilocus Sequence Typing (cgMLST) Report (cgmlst_analysis/)</h3>
-  <br>
+---
+
+### **B. Core Genome Multilocus Sequence Typing (cgMLST) Report** (`cgmlst_analysis/`)
+
 ```text
 🚨 PUBLIC HEALTH SURVEILLANCE REPORT: cgMLST ANALYSIS
 ========================================================================
@@ -524,32 +521,27 @@ Active cgMLST Cluster Alerts:
  🔴 Cluster_001 (Size: 2) -> Samples: SRR37747420, SRR37747475 [Max Distance: 1]
 ========================================================================
 ```
-  <br>
-  <p><i>Table B: High-resolution allele mismatch surveillance monitoring. The active cluster alert flags the epidemiologically linked outbreak isolates SRR37747420 and SRR37747475 with an tight max distance of 1 locus mismatch.</i></p>
 
-  <br>
-  <hr style="border: 0; border-top: 1px dashed #e1e4e8; margin: 40px 0;">
-  <br>
+*Table B: High-resolution allele mismatch surveillance monitoring. The active cluster alert flags the epidemiologically linked outbreak isolates SRR37747420 and SRR37747475 with a tight max distance of 1 locus mismatch.*
 
-  <!-- SECTION C: PLASMID INSPECTION REPORT -->
-  <h3>C. MOB-typer Plasmid Inspection & Mobility Report (plasmid_analysis/)</h3>
-  <br>
+---
 
-  | Sample ID | Contigs | Size (bp) | GC | Rep Type | Relaxase | MPF Type | Predicted Mobility | Primary Cluster ID | Source | County |
-  | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- | :---: | :--- | :--- |
-  | **SRR37747424** | 32 | 3,517,488 | 38.21% | - | MOBP | MPF_T | **conjugative** | ?? AD614 | Water | Saint Croix |
-  | **SRR37747475** | 62 | 3,315,022 | 38.21% | - | - | - | non-mobilizable | ?? AF063 | Clinical | Escambia |
-  | **SRR37747502** | 81 | 3,268,012 | 38.25% | - | - | - | non-mobilizable | ?? AF063 | Clinical | Nassau |
-  | **SRR37747501** | 142 | 3,202,117 | 38.22% | - | - | - | non-mobilizable | ?? AF063 | Clinical | Duval |
-  | **SRR37747463** | 73 | 3,389,718 | 38.36% | - | - | - | non-mobilizable | ?? AF063 | Environmental | Pasco |
-  | **SRR37747398** | 92 | 3,539,626 | 38.09% | - | - | MPF_F | non-mobilizable | ?? AA720 | Clinical | Hillsborough |
-  | **SRR37747464** | 92 | 3,455,700 | 38.22% | - | - | - | non-mobilizable | ?? AD650 | Clinical | Duval |
-  | **SRR37747472** | 45 | 3,273,876 | 38.23% | - | - | - | non-mobilizable | ?? AF063 | Clinical | Duval |
-  | **SRR37747388** | 27 | 3,432,937 | 38.17% | - | - | - | non-mobilizable | ?? AF063 | Environmental | Saint Croix |
-  | **SRR37747420** | 162 | 3,262,813 | 38.34% | - | - | - | non-mobilizable | ?? AF714 | Clinical | Escambia |
+### **C. MOB-typer Plasmid Inspection & Mobility Report** (`plasmid_analysis/`)
 
-  <br>
-  <p><i>Table C: Mobilome profiling and typing metrics extracted via MOB-suite tools. Only water isolate SRR37747424 presents a fully conjugative plasmid framework signature (Relaxase Type MOBP, MPF Type MPF_T). Outbreak strains carry non-mobilizable elements.</i></p>
+| Sample ID | Contigs | Size (bp) | GC | Rep Type | Relaxase | MPF Type | Predicted Mobility | Primary Cluster ID | Source | County |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- | :---: | :--- | :--- |
+| **SRR37747424** | 32 | 3,517,488 | 38.21% | - | MOBP | MPF_T | **conjugative** | ?? AD614 | Water | Saint Croix |
+| **SRR37747475** | 62 | 3,315,022 | 38.21% | - | - | - | non-mobilizable | ?? AF063 | Clinical | Escambia |
+| **SRR37747502** | 81 | 3,268,012 | 38.25% | - | - | - | non-mobilizable | ?? AF063 | Clinical | Nassau |
+| **SRR37747501** | 142 | 3,202,117 | 38.22% | - | - | - | non-mobilizable | ?? AF063 | Clinical | Duval |
+| **SRR37747463** | 73 | 3,389,718 | 38.36% | - | - | - | non-mobilizable | ?? AF063 | Environmental | Pasco |
+| **SRR37747398** | 92 | 3,539,626 | 38.09% | - | - | MPF_F | non-mobilizable | ?? AA720 | Clinical | Hillsborough |
+| **SRR37747464** | 92 | 3,455,700 | 38.22% | - | - | - | non-mobilizable | ?? AD650 | Clinical | Duval |
+| **SRR37747472** | 45 | 3,273,876 | 38.23% | - | - | - | non-mobilizable | ?? AF063 | Clinical | Duval |
+| **SRR37747388** | 27 | 3,432,937 | 38.17% | - | - | - | non-mobilizable | ?? AF063 | Environmental | Saint Croix |
+| **SRR37747420** | 162 | 3,262,813 | 38.34% | - | - | - | non-mobilizable | ?? AF714 | Clinical | Escambia |
+
+*Table C: Mobilome profiling and typing metrics extracted via MOB-suite tools. Only water isolate SRR37747424 presents a fully conjugative plasmid framework signature (Relaxase Type MOBP, MPF Type MPF_T). Outbreak strains carry non-mobilizable elements.*
 
 </details>
 
