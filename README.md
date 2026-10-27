@@ -409,10 +409,31 @@ This structured multi-panel visualization provides an overview of the global gen
     </tr>
   </table>
   <br>
-  <p><i>Figure: Integrated pangenome analysis panel capturing core genome conservation metrics (1,280 core gene clusters), accessory shell trends (3,640 genes), and strain-specific cloud components (2,547 unique isolates) evaluated across the 10-strain cohort.</i></p>
-</div>
-</details>
+  <p><i>Figure 1: Integrated pangenome analysis panel capturing core genome conservation metrics (1,280 core gene clusters), accessory shell trends (3,640 genes), and strain-specific cloud components (2,547 unique isolates) evaluated across the 10-isolate cohort.</i></p>
 
+  <hr style="border: 0; border-top: 1px dashed #ccc; margin: 30px 0;">
+
+  <p>This second panel focuses exclusively on the cloud genome fraction across the isolate cohort, evaluating accessory variations by comparing their clinical versus environmental isolation sources alongside their taxonomic subspecies assignments :</p>
+  
+  <table border="0" cellspacing="0" cellpadding="5" style="border-collapse: collapse; border: none; width: 100%;">
+    <tr style="border: none;">
+      <td align="center" valign="top" style="border: none; width: 33.33%;">
+        <b>Cloud Gene Presence/Absence</b><br><br>
+        <img src="assets/cloud_pangenome_annotated.png" alt="cloud_gene_heatmap" style="width: 100%; max-width: 350px; border-radius: 4px;" />
+      </td>
+      <td align="center" valign="top" style="border: none; width: 33.33%;">
+        <b>Unique Cloud Genes by Isolate Source</b><br><br>
+        <img src="assets/cloud_genes_by_source_pie.png" alt="source_distribution" style="width: 100%; max-width: 350px; border-radius: 4px;" />
+      </td>
+      <td align="center" valign="top" style="border: none; width: 33.33%;">
+        <b>Unique Cloud Genes by Subspecies</b><br><br>
+        <img src="assets/cloud_genes_by_subspecies_pie.png" alt="subspecies_distribution" style="width: 100%; max-width: 350px; border-radius: 4px;" />
+      </td>
+    </tr>
+  </table>
+  <br>
+  <p><i>Figure 2: Comprehensive genomic visualization of Legionella pneumophila isolates. The panel tracks the distribution profiles across multiple metadata factors, including a heatmap displaying the presence/absence of cloud genes across isolates annotated by source and subspecies (left), the specific unique genes distribution broken down strictly by isolates source (center), and the corresponding unique genes distribution grouped by Legionella pneumophila subspecies classifications (right).</i></p>
+</details>
 
 <details>
 <summary><b>🎯 Click to view LASSO Multinomial Regression Heatmap (lassoMregression_results/)</b></summary>

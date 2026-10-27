@@ -33,7 +33,7 @@ include {cluster_transmission_chains} from './clearwater_modules/cluster_transmi
 include { run_chewbbaca_cgmlst; generate_cgmlst_report } from './clearwater_modules/cgmlst_surveillance.nf'
 include { RUN_MOB_TYPER; MERGE_MOB_REPORTS } from './clearwater_modules/mobSuite_plasmid_surveillance.nf'
 include {PLOT_CLOUD_PANGENOME} from './clearwater_modules/cloud_pangenome_plot.nf'
-include {PLOT_EXCLUSIVE_CLOUD} from './clearwater_modules/exclusive_cloud_genes.nf
+include {PLOT_EXCLUSIVE_CLOUD} from './clearwater_modules/exclusive_cloud_genes.nf'
 
 
 workflow {
