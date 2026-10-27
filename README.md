@@ -454,11 +454,26 @@ This heatmap maps the predictive weights (Log-Odds Coefficients) calculated by t
 This Maximum-Likelihood consensus tree resolves the phylogenetic relationships across the target cohort based on core genome k-mer SNP alignments. High-confidence bootstrap support configurations (value of 100) are mapped onto the nodes:
 
 <div align="center">
+  <!-- SECTION A: UNANNOTATED BOOTSTRAP TREE -->
+  <h3>A. Core Genome Phylogeny with Node Bootstrap Values</h3>
+  <br>
   <img src="assets/core_bootstrap_tree.png" alt="Core Genome Phylogeny Tree with Bootstraps" width="100%" style="background-color: white !important; padding: 15px; border-radius: 6px; border: 1px solid #e1e4e8;" />
   <br><br>
+  <p><i>Figure 1: Midpoint-rooted phylogenetic tree computed via IQ-TREE. Branch text numbers indicate standard bootstrap support metrics calculated across 1,000 replicate pairings, demonstrating maximum confidence values across all major nodes.</i></p>
 
-  <p><i>Figure: Midpoint-rooted phylogenetic tree computed via IQ-TREE. Branch text numbers indicate standard bootstrap support metrics calculated across 1,000 replicate pairings, demonstrating maximum confidence values across all major nodes.</i></p>
+  <br>
+  <hr style="border: 0; border-top: 1px dashed #e1e4e8; margin: 40px 0;">
+  <br>
+
+  <!-- SECTION B: ANNOTATED METADATA TREE -->
+  <h3>B. Phylogeny Annotated by Subspecies, Source, and Epidemiology</h3>
+  <br>
+  <img src="assets/annotated_corebs_tree.png" alt="Core Genome Phylogeny Annotated with Metadata" width="100%" style="background-color: white !important; padding: 15px; border-radius: 6px; border: 1px solid #e1e4e8;" />
+  <br><br>
+  <p><i>Figure 2: Metadata-annotated core genome tree mapping individual isolate lineages against epidemiological classifications (Outbreak status), isolation environment (Clinical, Environmental, or Water sources), geographic origin (County), and specific taxonomic L. pneumophila subspecies assignments (s_fraseri, s_pneumophila, s_raphaeli).</i></p>
 </div>
 </details>
+
+
 
 ### Run Clearwater on as many (ex. >= 30) samples as possible to appreciate its performance.

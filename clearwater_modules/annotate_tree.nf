@@ -12,6 +12,7 @@ process annotate_tree {
 
     output:
     path "annotated_phylogeny.pdf",   emit: annotated_pdf
+    path "annotated_tree.png",        emit: annotated_png
     path "annotated_tree_data.nexus", emit: annotated_nexus
 
     script:
@@ -184,8 +185,11 @@ process annotate_tree {
          scale_y_continuous(expand = expansion(mult = c(0.02, 0.08))) 
 
     # 11. Save production-ready analytical outputs
-    pdf_width <- if (has_meta_flag) 13 else 9.5 
-    ggsave("annotated_phylogeny.pdf", plot = p, width = pdf_width, height = 11, units = "in")
+    output_width <- if (has_meta_flag) 13 else 9.5 
+    
+    # Export both PDF and PNG formats
+    ggsave("annotated_phylogeny.pdf", plot = p, width = output_width, height = 11, units = "in")
+    ggsave("annotated_tree.png", plot = p, width = output_width, height = 11, units = "in", dpi = 300)
 
     # Save a fully compatible Nexus format file for external viewer compatibility
     treeio::write.beast(annotated_tree, file = "annotated_tree_data.nexus")
