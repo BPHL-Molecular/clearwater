@@ -6,3 +6,8 @@ work/
 # Ignore specific result formats you don't want tracked
 *.log
 *.tmp
+
+# Apptainer / Singularity container images
+apptainer_cache/
+*.img
+*.sif

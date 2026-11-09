@@ -66,10 +66,10 @@ process annotate_tree {
       annotation_df <- reg_df %>% mutate(Isolate_Sources = NA_character_, County = NA_character_)
     }
 
-    # 4. Load the outbreak roster file to flag active transmission carriers
+    # 4. Load the outbreak roster file to flag active transmission carriers as clusters
     carriers_df <- read_tsv("${active_carriers_file}", show_col_types = FALSE) %>%
       select(SampleID) %>%
-      mutate(Outbreak_Status = "[OUTBREAK]")
+      mutate(Outbreak_Status = "CLUSTER")
 
     # Join the active transmission tags onto your foundational tracking matrix smoothly
     annotation_df <- left_join(annotation_df, carriers_df, by = "SampleID") %>%
@@ -128,18 +128,18 @@ process annotate_tree {
       size = 2.4, fontface = "bold", color = "#111111", hjust = 0
     )
 
-    # B. Column 2: "Status" Header & Row Alert Tags
+    # B. Column 2: "Outbreak?" Header & Row Alert Tags (Changed from "Status" and "CLUSTER")
     p <- p + geom_text(
       data = filter(p\$data, isTip & Outbreak_Status != ""),
       aes(x = outbreak_x, y = y, label = Outbreak_Status), 
       size = 1.9, fontface = "bold", color = "#E41A1C", hjust = 0 
     ) +
     annotate(
-      "text", x = outbreak_x, y = header_y, label = "Status",
+      "text", x = outbreak_x, y = header_y, label = "Outbreak?",
       size = 2.4, fontface = "bold", color = "#111111", hjust = 0
     ) +
     annotate(
-      "text", x = outbreak_x, y = underline_y, label = "______",
+      "text", x = outbreak_x, y = underline_y, label = "________",
       size = 2.4, fontface = "bold", color = "#111111", hjust = 0
     )
 
@@ -179,12 +179,29 @@ process annotate_tree {
     # Add a clean evolutionary distance scale bar
     p <- p + geom_treescale(x = 0, y = -1, width = max_x * 0.1)
 
-    # 10. Dynamically expand total canvas right boundary to clear all columns nicely
+    # =========================================================================
+    # 10. ADD EPIDEMIOLOGICAL FOOTNOTES UNDERNEATH THE TREE
+    # =========================================================================
+    note_y_1 = -2.2
+    note_y_2 = -3.2
+    
+    p <- p + annotate(
+      "text", x = 0, y = note_y_1, 
+      label = "Note: An outbreak is explicitly defined by the presence of clinical cases within a genetic cluster.",
+      size = 2.2, fontface = "italic", color = "#333333", hjust = 0
+    ) +
+    annotate(
+      "text", x = 0, y = note_y_2, 
+      label = "Scale: Tree scale represents the number of nucleotide substitutions per site.",
+      size = 2.2, fontface = "plain", color = "#333333", hjust = 0
+    )
+
+    # 11. Dynamically expand total canvas right boundary to clear all columns nicely
     extended_boundary <- if (has_meta_flag) max_x * 2.0 else max_x * 1.5
     p <- p + xlim(0, extended_boundary) +
-         scale_y_continuous(expand = expansion(mult = c(0.02, 0.08))) 
+         scale_y_continuous(expand = expansion(mult = c(0.08, 0.08))) 
 
-    # 11. Save production-ready analytical outputs
+    # 12. Save production-ready analytical outputs
     output_width <- if (has_meta_flag) 13 else 9.5 
     
     # Export both PDF and PNG formats
